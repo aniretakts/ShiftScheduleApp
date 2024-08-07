@@ -137,15 +137,26 @@
                 </Button>
             </Grid>
 
+            <TextBlock Text="Στον παρακάτω πίνακα προσθέστε τις άδειες της επόμενης εβδομάδας. Οι υπάλληλοι τις ημερομηνίες αυτές θα εξαιρεθούν κατα τη δημιουργία του εβδομαδιαίου προγράμματος"
+                       TextWrapping="Wrap"    
+                       Foreground="White"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        VerticalAlignment="Top"
+                        Margin="80,31,99,0" Grid.Row="1" Height="113"/>
+
+
+
+
             <!-- DataGrid -->
-            <DataGrid Grid.Row="1" x:Name="VacationGrid" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" Margin="10,10,10,50">
+            <DataGrid Grid.Row="1" x:Name="VacationGrid" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" Margin="10,144,10,84">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Day" Binding="{Binding Date, StringFormat='{}{0:dddd}'}" IsReadOnly="True" Width="*"/>
 
                     <DataGridTemplateColumn Header="Morning Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding EmployeeId, Mode=TwoWay}"/>
+                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding MorningShiftEmployeeId, Mode=TwoWay}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -153,7 +164,7 @@
                     <DataGridTemplateColumn Header="Afternoon Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding EmployeeId, Mode=TwoWay}"/>
+                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding AfternoonShiftEmployeeId, Mode=TwoWay}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -161,12 +172,13 @@
                     <DataGridTemplateColumn Header="Evening Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding EmployeeId, Mode=TwoWay}"/>
+                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding EveningShiftEmployeeId, Mode=TwoWay}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
 
             <Button Content="Αποθήκευση / Συνέχεια"
                             Foreground="White"

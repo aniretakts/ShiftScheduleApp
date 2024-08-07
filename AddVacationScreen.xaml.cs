@@ -81,10 +81,8 @@ namespace WpfApp2
         private void LoadVacationGrid()
         {
             List<Vacation> vacations = _vacationService.GetVacations();
-
             var vacationData = new List<Vacation>();
 
-            // List of days starting from Monday
             var daysOfWeek = new List<DayOfWeek>
             {
                 DayOfWeek.Monday,
@@ -96,30 +94,23 @@ namespace WpfApp2
                 DayOfWeek.Sunday
             };
 
-            // Create an entry for each day and shift
             foreach (DayOfWeek day in daysOfWeek)
             {
-                for (int shift = 1; shift <= 3; shift++)
+                var vacation = new Vacation
                 {
-                    // Find the vacation entry if it exists
-                    var vacation = vacations.FirstOrDefault(v => v.Date.DayOfWeek == day && v.Shift == shift);
+                    Date = DateTime.Now.AddDays((int)day - (int)DateTime.Now.DayOfWeek + (DateTime.Now.DayOfWeek == DayOfWeek.Sunday ? 1 : 0)),
+                    Employees = _employees
+                };
 
-                    if (vacation == null)
-                    {
-                        vacation = new Vacation
-                        {
-                            Date = DateTime.Now.AddDays((int)day - (int)DateTime.Now.DayOfWeek + (DateTime.Now.DayOfWeek == DayOfWeek.Sunday ? 1 : 0)),
-                            Shift = shift,
-                            Employees = _employees
-                        };
-                    }
-                    else
-                    {
-                        vacation.Employees = _employees;
-                    }
-
-                    vacationData.Add(vacation);
+                var dayVacations = vacations.Where(v => v.Date.DayOfWeek == day).ToList();
+                if (dayVacations.Any())
+                {
+                    vacation.MorningShiftEmployeeId = dayVacations.FirstOrDefault(v => v.MorningShiftEmployeeId != 0)?.MorningShiftEmployeeId ?? 0;
+                    vacation.AfternoonShiftEmployeeId = dayVacations.FirstOrDefault(v => v.AfternoonShiftEmployeeId != 0)?.AfternoonShiftEmployeeId ?? 0;
+                    vacation.EveningShiftEmployeeId = dayVacations.FirstOrDefault(v => v.EveningShiftEmployeeId != 0)?.EveningShiftEmployeeId ?? 0;
                 }
+
+                vacationData.Add(vacation);
             }
 
             VacationGrid.ItemsSource = vacationData;

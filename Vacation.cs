@@ -6,33 +6,18 @@ using System.Threading.Tasks;
 
 namespace WpfApp2
 {
-
     public class Vacation
     {
-        public int Id { get; set; }
-        public int EmployeeId { get; set; }
         public DateTime Date { get; set; }
-        public int Shift { get; set; }
+        public int MorningShiftEmployeeId { get; set; }
+        public int AfternoonShiftEmployeeId { get; set; }
+        public int EveningShiftEmployeeId { get; set; }
 
-
-        // Additional properties for display
-        public string EmployeeName { get; set; }
-
-        // Properties to hold employee lists
         public List<Employee> Employees { get; set; }
-
-        // New properties for multiple selections
-        public List<int> MorningShiftEmployees { get; set; }
-        public List<int> AfternoonShiftEmployees { get; set; }
-        public List<int> EveningShiftEmployees { get; set; }
-
 
         public Vacation()
         {
-            MorningShiftEmployees = new List<int>();
-            AfternoonShiftEmployees = new List<int>();
-            EveningShiftEmployees = new List<int>();
+            Employees = new List<Employee>();
         }
-
     }
 }
