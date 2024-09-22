@@ -83,26 +83,25 @@ namespace WpfApp2
             List<Vacation> vacations = _vacationService.GetVacations();
             var vacationData = new List<Vacation>();
 
-            var daysOfWeek = new List<DayOfWeek>
-            {
-                DayOfWeek.Monday,
-                DayOfWeek.Tuesday,
-                DayOfWeek.Wednesday,
-                DayOfWeek.Thursday,
-                DayOfWeek.Friday,
-                DayOfWeek.Saturday,
-                DayOfWeek.Sunday
-            };
+            // Get today's date
+            DateTime today = DateTime.Now;
 
-            foreach (DayOfWeek day in daysOfWeek)
+            // Calculate the Monday of the current week
+            DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek + (today.DayOfWeek == DayOfWeek.Sunday ? -6 : 1));
+
+            // Loop through the 7 days of the week starting from Monday
+            for (int i = 0; i < 7; i++)
             {
+                DateTime currentDate = startOfWeek.AddDays(i); // Start from Monday and add i days
+
                 var vacation = new Vacation
                 {
-                    Date = DateTime.Now.AddDays((int)day - (int)DateTime.Now.DayOfWeek + (DateTime.Now.DayOfWeek == DayOfWeek.Sunday ? 1 : 0)),
+                    Date = currentDate,
                     Employees = _employees
                 };
 
-                var dayVacations = vacations.Where(v => v.Date.DayOfWeek == day).ToList();
+                // Find vacations for the current day
+                var dayVacations = vacations.Where(v => v.Date.Date == currentDate.Date).ToList();
                 if (dayVacations.Any())
                 {
                     vacation.MorningShiftEmployeeId = dayVacations.FirstOrDefault(v => v.MorningShiftEmployeeId != 0)?.MorningShiftEmployeeId ?? 0;
@@ -113,8 +112,11 @@ namespace WpfApp2
                 vacationData.Add(vacation);
             }
 
+            // Bind the data to the DataGrid
             VacationGrid.ItemsSource = vacationData;
         }
+
+
 
 
         private void ButtonContinue_Click(object sender, RoutedEventArgs e)

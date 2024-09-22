@@ -14,7 +14,7 @@ namespace WpfApp2
         public List<Vacation> GetVacations()
         {
             List<Vacation> vacations = new List<Vacation>();
-            string query = "SELECT Date, MorningShiftEmployeeId, AfternoonShiftEmployeeId, EveningShiftEmployeeId FROM VacationTbl";
+            string query = "SELECT Date, MorningShiftEmployeeIds, AfternoonShiftEmployeeIds, EveningShiftEmployeeIds FROM VacationTbl";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
