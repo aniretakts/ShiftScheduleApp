@@ -12,6 +12,12 @@
         Background="Transparent"
         AllowsTransparency="True"
         MouseDown="Window_MouseDown">
+    <!-- Define Resources Here -->
+    <Window.Resources>
+        <local:EmployeeListToStringConverter x:Key="EmployeeListToStringConverter"/>
+        <local:EmployeeSelectionConverter x:Key="EmployeeSelectionConverter"/>
+        <!-- Add other converters or resources here -->
+    </Window.Resources>
     <Border CornerRadius="50"
             BorderThickness="5">
         <Border.BorderBrush>
@@ -151,31 +157,85 @@
             <!-- DataGrid -->
             <DataGrid Grid.Row="1" x:Name="VacationGrid" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" Margin="10,144,10,84">
                 <DataGrid.Columns>
+                    <!-- Day Column -->
                     <DataGridTextColumn Header="Day" Binding="{Binding Date, StringFormat='{}{0:dddd}'}" IsReadOnly="True" Width="*"/>
 
+
+                    <!-- Morning Shift Multi-Select -->
                     <DataGridTemplateColumn Header="Morning Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding MorningShiftEmployeeId, Mode=TwoWay}"/>
+                                <ComboBox IsEditable="False" 
+                              IsReadOnly="True"
+                              ItemsSource="{Binding Employees}"
+                              DisplayMemberPath="EmpFirstname"
+                              SelectedValuePath="EmployeeId"
+                              Text="{Binding MorningShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
+                              Height="25">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding EmpFirstname}" 
+                                          IsChecked="{Binding Path=DataContext.MorningShiftEmployees, 
+                                                     Mode=TwoWay, 
+                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
+                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
+                    <!-- Afternoon Shift Multi-Select -->
                     <DataGridTemplateColumn Header="Afternoon Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding AfternoonShiftEmployeeId, Mode=TwoWay}"/>
+                                <ComboBox IsEditable="False" 
+                              IsReadOnly="True"
+                              ItemsSource="{Binding Employees}"
+                              DisplayMemberPath="EmpFirstname"
+                              SelectedValuePath="EmployeeId"
+                              Text="{Binding AfternoonShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
+                              Height="25">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding EmpFirstname}" 
+                                          IsChecked="{Binding Path=DataContext.AfternoonShiftEmployees, 
+                                                     Mode=TwoWay, 
+                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
+                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
+                    <!-- Evening Shift Multi-Select -->
                     <DataGridTemplateColumn Header="Evening Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="EmpFirstname" SelectedValuePath="EmpId" SelectedValue="{Binding EveningShiftEmployeeId, Mode=TwoWay}"/>
+                                <ComboBox IsEditable="False" 
+                              IsReadOnly="True"
+                              ItemsSource="{Binding Employees}"
+                              DisplayMemberPath="EmpFirstname"
+                              SelectedValuePath="EmployeeId"
+                              Text="{Binding EveningShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
+                              Height="25">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding EmpFirstname}" 
+                                          IsChecked="{Binding Path=DataContext.EveningShiftEmployees, 
+                                                     Mode=TwoWay, 
+                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
+                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+
                 </DataGrid.Columns>
             </DataGrid>
 

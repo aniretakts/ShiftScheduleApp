@@ -80,40 +80,57 @@ namespace WpfApp2
 
         private void LoadVacationGrid()
         {
+            // Retrieve vacations from the database
             List<Vacation> vacations = _vacationService.GetVacations();
             var vacationData = new List<Vacation>();
 
-            // Get today's date
-            DateTime today = DateTime.Now;
-
-            // Calculate the Monday of the current week
-            DateTime startOfWeek = today.AddDays(-(int)today.DayOfWeek + (today.DayOfWeek == DayOfWeek.Sunday ? -6 : 1));
-
-            // Loop through the 7 days of the week starting from Monday
-            for (int i = 0; i < 7; i++)
+            var daysOfWeek = new List<DayOfWeek>
             {
-                DateTime currentDate = startOfWeek.AddDays(i); // Start from Monday and add i days
+                DayOfWeek.Monday,
+                DayOfWeek.Tuesday,
+                DayOfWeek.Wednesday,
+                DayOfWeek.Thursday,
+                DayOfWeek.Friday,
+                DayOfWeek.Saturday,
+                DayOfWeek.Sunday
+            };
 
+            // Iterate through each day of the week, starting from Monday
+            foreach (DayOfWeek day in daysOfWeek)
+            {
                 var vacation = new Vacation
                 {
-                    Date = currentDate,
-                    Employees = _employees
+                    Date = GetNextWeekday(day),
+                    Employees = _employees // All employees, for multi-select dropdowns
                 };
 
-                // Find vacations for the current day
-                var dayVacations = vacations.Where(v => v.Date.Date == currentDate.Date).ToList();
+                // Retrieve vacations for the current day
+                var dayVacations = vacations.Where(v => v.Date.DayOfWeek == day).ToList();
+
                 if (dayVacations.Any())
                 {
-                    vacation.MorningShiftEmployeeId = dayVacations.FirstOrDefault(v => v.MorningShiftEmployeeId != 0)?.MorningShiftEmployeeId ?? 0;
-                    vacation.AfternoonShiftEmployeeId = dayVacations.FirstOrDefault(v => v.AfternoonShiftEmployeeId != 0)?.AfternoonShiftEmployeeId ?? 0;
-                    vacation.EveningShiftEmployeeId = dayVacations.FirstOrDefault(v => v.EveningShiftEmployeeId != 0)?.EveningShiftEmployeeId ?? 0;
+                    // Morning Shift: Get the list of employees for the morning shift on the current day
+                    vacation.MorningShiftEmployees = dayVacations.SelectMany(v => v.MorningShiftEmployees).Distinct().ToList();
+
+                    // Afternoon Shift: Get the list of employees for the afternoon shift on the current day
+                    vacation.AfternoonShiftEmployees = dayVacations.SelectMany(v => v.AfternoonShiftEmployees).Distinct().ToList();
+
+                    // Evening Shift: Get the list of employees for the evening shift on the current day
+                    vacation.EveningShiftEmployees = dayVacations.SelectMany(v => v.EveningShiftEmployees).Distinct().ToList();
                 }
 
                 vacationData.Add(vacation);
             }
 
-            // Bind the data to the DataGrid
+            // Bind the data to the grid
             VacationGrid.ItemsSource = vacationData;
+        }
+
+        private DateTime GetNextWeekday(DayOfWeek day)
+        {
+            // Calculate the next occurrence of the given day
+            int daysUntilDay = ((int)day - (int)DateTime.Today.DayOfWeek + 7) % 7;
+            return DateTime.Today.AddDays(daysUntilDay);
         }
 
 

@@ -81,9 +81,11 @@
     </Compile>
     <Compile Include="DepartmentService.cs" />
     <Compile Include="Employee.cs" />
+    <Compile Include="EmployeeListToStringConverter.cs" />
     <Compile Include="EmployeeScreen.xaml.cs">
       <DependentUpon>EmployeeScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeSelectionConverter.cs" />
     <Compile Include="EmployeeService.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Level.cs" />
@@ -96,6 +98,9 @@
       <DependentUpon>Template.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vacation.cs" />
+    <Compile Include="VacationAfternoonShift.cs" />
+    <Compile Include="VacationEveningShift.cs" />
+    <Compile Include="VacationMorningShift.cs" />
     <Compile Include="VacationService.cs" />
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>

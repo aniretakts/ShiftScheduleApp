@@ -14,7 +14,7 @@ namespace WpfApp2
         public List<Vacation> GetVacations()
         {
             List<Vacation> vacations = new List<Vacation>();
-            string query = "SELECT Date, MorningShiftEmployeeIds, AfternoonShiftEmployeeIds, EveningShiftEmployeeIds FROM VacationTbl";
+            string query = @"SELECT v.VacationId, v.[Date] FROM Vacation v";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -25,12 +25,15 @@ namespace WpfApp2
                 {
                     while (reader.Read())
                     {
+                        var vacationId = reader.GetInt32(0);
+                        var vacationDate = reader.GetDateTime(1);
+
                         vacations.Add(new Vacation
                         {
-                            Date = reader.GetDateTime(0),
-                            MorningShiftEmployeeId = reader.IsDBNull(1) ? 0 : reader.GetInt32(1),
-                            AfternoonShiftEmployeeId = reader.IsDBNull(2) ? 0 : reader.GetInt32(2),
-                            EveningShiftEmployeeId = reader.IsDBNull(3) ? 0 : reader.GetInt32(3)
+                            Date = vacationDate,
+                            MorningShiftEmployees = GetEmployeesForShift(vacationId, "MorningShift"),
+                            AfternoonShiftEmployees = GetEmployeesForShift(vacationId, "AfternoonShift"),
+                            EveningShiftEmployees = GetEmployeesForShift(vacationId, "EveningShift")
                         });
                     }
                 }
@@ -39,35 +42,68 @@ namespace WpfApp2
             return vacations;
         }
 
+        // Helper method to retrieve employee IDs for a given shift
+        private List<Employee> GetEmployeesForShift(int vacationId, string shift)
+        {
+            List<Employee> employees = new List<Employee>();
+            string query = $@"SELECT EmployeeId FROM Vacation_{shift} WHERE VacationId = @VacationId";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@VacationId", vacationId);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int employeeId = reader.GetInt32(0);
+                        employees.Add(new Employee { EmpId = employeeId });
+                    }
+                }
+            }
+
+            return employees;
+        }
+
+        // Helper method to parse a comma-separated string of IDs into a list of Employees
+        private List<Employee> ParseEmployeeIds(string employeeIds)
+        {
+            var ids = employeeIds.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            return ids.Select(id => new Employee { EmpId = int.Parse(id) }).ToList();
+        }
+
         public void SaveVacation(Vacation vacation)
         {
             string query = @"
-            IF EXISTS (SELECT 1 FROM VacationTbl WHERE Date = @Date)
-            BEGIN
-                UPDATE VacationTbl
-                SET MorningShiftEmployeeId = @MorningShiftEmployeeId,
-                    AfternoonShiftEmployeeId = @AfternoonShiftEmployeeId,
-                    EveningShiftEmployeeId = @EveningShiftEmployeeId
-                WHERE Date = @Date
-            END
-            ELSE
-            BEGIN
-                INSERT INTO VacationTbl (Date, MorningShiftEmployeeId, AfternoonShiftEmployeeId, EveningShiftEmployeeId)
-                VALUES (@Date, @MorningShiftEmployeeId, @AfternoonShiftEmployeeId, @EveningShiftEmployeeId)
-            END";
+                        IF EXISTS (SELECT 1 FROM VacationTbl WHERE Date = @Date)
+                        BEGIN
+                            UPDATE VacationTbl
+                            SET MorningShiftEmployeeIds = @MorningShiftEmployeeIds,
+                                AfternoonShiftEmployeeIds = @AfternoonShiftEmployeeIds,
+                                EveningShiftEmployeeIds = @EveningShiftEmployeeIds
+                            WHERE Date = @Date
+                        END
+                        ELSE
+                        BEGIN
+                            INSERT INTO VacationTbl (Date, MorningShiftEmployeeIds, AfternoonShiftEmployeeIds, EveningShiftEmployeeIds)
+                            VALUES (@Date, @MorningShiftEmployeeIds, @AfternoonShiftEmployeeIds, @EveningShiftEmployeeIds)
+                        END";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Date", vacation.Date);
-                command.Parameters.AddWithValue("@MorningShiftEmployeeId", vacation.MorningShiftEmployeeId == 0 ? (object)DBNull.Value : vacation.MorningShiftEmployeeId);
-                command.Parameters.AddWithValue("@AfternoonShiftEmployeeId", vacation.AfternoonShiftEmployeeId == 0 ? (object)DBNull.Value : vacation.AfternoonShiftEmployeeId);
-                command.Parameters.AddWithValue("@EveningShiftEmployeeId", vacation.EveningShiftEmployeeId == 0 ? (object)DBNull.Value : vacation.EveningShiftEmployeeId);
+                command.Parameters.AddWithValue("@MorningShiftEmployeeIds", string.Join(",", vacation.MorningShiftEmployees.Select(e => e.EmpId)));
+                command.Parameters.AddWithValue("@AfternoonShiftEmployeeIds", string.Join(",", vacation.AfternoonShiftEmployees.Select(e => e.EmpId)));
+                command.Parameters.AddWithValue("@EveningShiftEmployeeIds", string.Join(",", vacation.EveningShiftEmployees.Select(e => e.EmpId)));
 
                 connection.Open();
                 command.ExecuteNonQuery();
             }
         }
+
     }
 
 
