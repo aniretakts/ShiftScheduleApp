@@ -1,11 +1,11 @@
-﻿<Window x:Class="WpfApp2.AddMondayVacationScreen"
+﻿<Window x:Class="WpfApp2.CreateScheduleScreen"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="AddMondayVacationScreen" Height="550" Width="800"
+        Title="CreateScheduleScreen" Height="550" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -30,7 +30,7 @@
             </LinearGradientBrush>
         </Border.Background>
 
-        <Grid Margin="5,5,-5,-5" Loaded="Grid_Loaded">
+        <Grid Margin="5,5,-5,-5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
@@ -147,22 +147,22 @@
                 </Button>
             </Grid>
 
-            <TextBlock Text="Συμπληρώστε τις άδειες για τη Δευτέρα" 
+            <TextBlock Text="Επιλέξετε το τμήμα που θέλετε να φτιάξετε πρόγραμμα" 
                        HorizontalAlignment="Left" 
                        Margin="38,41,0,0" 
                        Grid.Row="1" 
                        TextWrapping="Wrap" 
                        Foreground="White"
                        FontSize="15"
-                       VerticalAlignment="Top" Width="357" Height="33"/>
-            <Button Content="Επόμενο" 
+                       VerticalAlignment="Top" Width="451" Height="33"/>
+            <Button Content="Ξεκινήστε" 
                     HorizontalAlignment="Left" 
                     Margin="591,426,0,0" 
                     Grid.Row="1" 
                     VerticalAlignment="Top" 
                     RenderTransformOrigin="0.376,-1.161" 
                     Height="42" Width="126" 
-                    Click="NextButton_Click">
+                    Click="StartButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <!--<Setter Property="TextElement.FontFamily" Value="".>-->
@@ -186,89 +186,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <!-- DataGrid -->
-            <DataGrid Grid.Row="1" x:Name="VacationGrid" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" Margin="24,99,24,129">
-                <DataGrid.Columns>
-                    <!-- Morning Shift Multi-Select -->
-                    <DataGridTemplateColumn Header="Morning Shift" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ComboBox IsEditable="False" 
-                              IsReadOnly="True"
-                              ItemsSource="{Binding Employees}"
-                              DisplayMemberPath="EmpFirstname"
-                              SelectedValuePath="EmployeeId"
-                              Text="{Binding MorningShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
-                              Height="25">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox Content="{Binding EmpFirstname}" 
-                                          IsChecked="{Binding Path=DataContext.MorningShiftEmployees, 
-                                                     Mode=TwoWay, 
-                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
-                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <!-- Afternoon Shift Multi-Select -->
-                    <DataGridTemplateColumn Header="Afternoon Shift" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ComboBox IsEditable="False" 
-                              IsReadOnly="True"
-                              ItemsSource="{Binding Employees}"
-                              DisplayMemberPath="EmpFirstname"
-                              SelectedValuePath="EmployeeId"
-                              Text="{Binding AfternoonShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
-                              Height="25">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox Content="{Binding EmpFirstname}" 
-                                          IsChecked="{Binding Path=DataContext.AfternoonShiftEmployees, 
-                                                     Mode=TwoWay, 
-                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
-                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <!-- Evening Shift Multi-Select -->
-                    <DataGridTemplateColumn Header="Evening Shift" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ComboBox IsEditable="False" 
-                              IsReadOnly="True"
-                              ItemsSource="{Binding Employees}"
-                              DisplayMemberPath="EmpFirstname"
-                              SelectedValuePath="EmployeeId"
-                              Text="{Binding EveningShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
-                              Height="25">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox Content="{Binding EmpFirstname}" 
-                                          IsChecked="{Binding Path=DataContext.EveningShiftEmployees, 
-                                                     Mode=TwoWay, 
-                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
-                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                </DataGrid.Columns>
-            </DataGrid>
-
-
         </Grid>
     </Border>
 </Window>

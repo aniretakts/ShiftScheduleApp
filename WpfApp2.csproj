@@ -78,6 +78,9 @@
     <Compile Include="AddVacationScreen.xaml.cs">
       <DependentUpon>AddVacationScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CreateScheduleScreen.xaml.cs">
+      <DependentUpon>CreateScheduleScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Department.cs" />
     <Compile Include="DepartmentScreen.xaml.cs">
       <DependentUpon>DepartmentScreen.xaml</DependentUpon>
@@ -117,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddVacationScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateScheduleScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

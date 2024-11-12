@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,17 +15,11 @@ using System.Windows.Shapes;
 namespace WpfApp2
 {
     /// <summary>
-    /// Interaction logic for WelcomeScreen.xaml
+    /// Interaction logic for CreateScheduleScreen.xaml
     /// </summary>
-    public partial class WelcomeScreen : Window
+    public partial class CreateScheduleScreen : Window
     {
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            Application.Current.Shutdown();
-        }
-
-        public WelcomeScreen()
+        public CreateScheduleScreen()
         {
             InitializeComponent();
         }
@@ -47,19 +40,19 @@ namespace WpfApp2
             WindowState = WindowState.Minimized;
         }
 
-        private void PersonnelManagementButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Open the Personnel Management screen
-            PersonnelManagementScreen personnelWindow = new PersonnelManagementScreen();
-            personnelWindow.Show();
-            this.Hide();
-        }
-
         private void mainMenu_Click(object sender, RoutedEventArgs e)
         {
             // Open the Welcome screen
             WelcomeScreen welcomeScreen = new WelcomeScreen();
             welcomeScreen.Show();
+            this.Hide();
+        }
+
+        private void PersonnelManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the Personnel Management screen
+            PersonnelManagementScreen personnelWindow = new PersonnelManagementScreen();
+            personnelWindow.Show();
             this.Hide();
         }
 
@@ -71,13 +64,13 @@ namespace WpfApp2
             this.Hide();
         }
 
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            // Open the About screen
-            //AboutWindow aboutWindow = new AboutWindow();
-            //aboutWindow.Show();
+            // Open Monday Vacation screen
+            AddMondayVacationScreen addMondayVacationScreen = new AddMondayVacationScreen();
+            addMondayVacationScreen.Show();
+            this.Hide();
         }
-
-
     }
 }

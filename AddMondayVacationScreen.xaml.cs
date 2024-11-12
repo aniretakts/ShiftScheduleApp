@@ -59,9 +59,9 @@ namespace WpfApp2
 
         private void CreateSchedule_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Welcome screen
-            AddVacationScreen addVacationScreen = new AddVacationScreen();
-            addVacationScreen.Show();
+            // Open the Create schedule screen
+            CreateScheduleScreen createScheduleScreen = new CreateScheduleScreen();
+            createScheduleScreen.Show();
             this.Hide();
         }
 
