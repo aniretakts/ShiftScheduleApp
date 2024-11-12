@@ -187,21 +187,14 @@
                 </Button.Template>
             </Button>
 
-            <!-- DataGrid -->
             <DataGrid Grid.Row="1" x:Name="VacationGrid" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" Margin="24,99,24,129">
                 <DataGrid.Columns>
-                    <!-- Morning Shift Multi-Select -->
+                    <!-- Morning Shift -->
                     <DataGridTemplateColumn Header="Morning Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox IsEditable="False" 
-                              IsReadOnly="True"
-                              ItemsSource="{Binding Employees}"
-                              DisplayMemberPath="EmpFirstname"
-                              SelectedValuePath="EmployeeId"
-                              Text="{Binding MorningShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
-                              Height="25">
-                                    <ComboBox.ItemTemplate>
+                                <ItemsControl ItemsSource="{Binding Employees}">
+                                    <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <CheckBox Content="{Binding EmpFirstname}" 
                                           IsChecked="{Binding Path=DataContext.MorningShiftEmployees, 
@@ -209,24 +202,18 @@
                                                      RelativeSource={RelativeSource AncestorType=DataGridRow}, 
                                                      Converter={StaticResource EmployeeSelectionConverter}}" />
                                         </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <!-- Afternoon Shift Multi-Select -->
+                    <!-- Afternoon Shift -->
                     <DataGridTemplateColumn Header="Afternoon Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox IsEditable="False" 
-                              IsReadOnly="True"
-                              ItemsSource="{Binding Employees}"
-                              DisplayMemberPath="EmpFirstname"
-                              SelectedValuePath="EmployeeId"
-                              Text="{Binding AfternoonShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
-                              Height="25">
-                                    <ComboBox.ItemTemplate>
+                                <ItemsControl ItemsSource="{Binding Employees}">
+                                    <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <CheckBox Content="{Binding EmpFirstname}" 
                                           IsChecked="{Binding Path=DataContext.AfternoonShiftEmployees, 
@@ -234,24 +221,18 @@
                                                      RelativeSource={RelativeSource AncestorType=DataGridRow}, 
                                                      Converter={StaticResource EmployeeSelectionConverter}}" />
                                         </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <!-- Evening Shift Multi-Select -->
+                    <!-- Evening Shift -->
                     <DataGridTemplateColumn Header="Evening Shift" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox IsEditable="False" 
-                              IsReadOnly="True"
-                              ItemsSource="{Binding Employees}"
-                              DisplayMemberPath="EmpFirstname"
-                              SelectedValuePath="EmployeeId"
-                              Text="{Binding EveningShiftEmployees, Converter={StaticResource EmployeeListToStringConverter}}"
-                              Height="25">
-                                    <ComboBox.ItemTemplate>
+                                <ItemsControl ItemsSource="{Binding Employees}">
+                                    <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <CheckBox Content="{Binding EmpFirstname}" 
                                           IsChecked="{Binding Path=DataContext.EveningShiftEmployees, 
@@ -259,14 +240,14 @@
                                                      RelativeSource={RelativeSource AncestorType=DataGridRow}, 
                                                      Converter={StaticResource EmployeeSelectionConverter}}" />
                                         </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
                 </DataGrid.Columns>
             </DataGrid>
+
 
 
         </Grid>

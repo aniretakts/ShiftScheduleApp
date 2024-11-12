@@ -19,9 +19,18 @@ namespace WpfApp2
     /// </summary>
     public partial class CreateScheduleScreen : Window
     {
+        private readonly DepartmentService _departmentService;
         public CreateScheduleScreen()
         {
             InitializeComponent();
+            _departmentService = new DepartmentService();
+            LoadDepartments();
+        }
+
+        private void LoadDepartments()
+        {
+            List<Department> departments = _departmentService.GetDepartments();
+            Department.ItemsSource = departments;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -67,10 +76,25 @@ namespace WpfApp2
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            // Open Monday Vacation screen
-            AddMondayVacationScreen addMondayVacationScreen = new AddMondayVacationScreen();
-            addMondayVacationScreen.Show();
-            this.Hide();
+            // Get the selected department
+            Department selectedDepartment = (Department)Department.SelectedItem;
+
+            if (selectedDepartment != null) {
+                // Open Monday Vacation screen
+                AddMondayVacationScreen addMondayVacationScreen = new AddMondayVacationScreen();
+                addMondayVacationScreen.Show();
+                this.Hide();
+            } else {
+                MessageBox.Show("Please select a department before proceeding.", "Selection Required", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
+
+        private void Department_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Enable the Start button only if a department is selected
+            StartButton.IsEnabled = Department.SelectedItem != null;
+        }
+
+
     }
 }

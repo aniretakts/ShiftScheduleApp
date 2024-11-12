@@ -155,14 +155,27 @@
                        Foreground="White"
                        FontSize="15"
                        VerticalAlignment="Top" Width="451" Height="33"/>
+            <ComboBox Name="Department"
+                      HorizontalAlignment="Left"
+                      Margin="90,90,0,0"
+                      Grid.Row="1"
+                      VerticalAlignment="Top"
+                      Width="229"
+                      DisplayMemberPath="DepName"
+                      SelectedValuePath="DepId"
+                      Height="35"
+                      SelectionChanged="Department_SelectionChanged"/>
+
             <Button Content="Ξεκινήστε" 
+                    Name="StartButton"
                     HorizontalAlignment="Left" 
-                    Margin="591,426,0,0" 
+                    Margin="583,418,0,0" 
                     Grid.Row="1" 
                     VerticalAlignment="Top" 
                     RenderTransformOrigin="0.376,-1.161" 
                     Height="42" Width="126" 
-                    Click="StartButton_Click">
+                    Click="StartButton_Click"
+                    IsEnabled="False" >
                 <Button.Style>
                     <Style TargetType="Button">
                         <!--<Setter Property="TextElement.FontFamily" Value="".>-->
@@ -185,6 +198,7 @@
                         </Border>
                     </ControlTemplate>
                 </Button.Template>
+
             </Button>
         </Grid>
     </Border>
