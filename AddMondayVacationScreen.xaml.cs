@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,14 @@ namespace WpfApp2
     /// </summary>
     public partial class AddMondayVacationScreen : Window
     {
-        public AddMondayVacationScreen()
+        private readonly EmployeeService _employeeService;    
+
+        public AddMondayVacationScreen(int selectedDepartment)
         {
             InitializeComponent();
+            _employeeService = new EmployeeService();
+            DataContext = new AddMondayVacationViewModel(selectedDepartment);
+            //LoadShiftData();
         }
 
 

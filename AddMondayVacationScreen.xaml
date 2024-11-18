@@ -12,6 +12,10 @@
         Background="Transparent"
         AllowsTransparency="True"
         MouseDown="Window_MouseDown">
+    <Window.Resources>
+        <local:EmployeeListToStringConverter x:Key="EmployeeListToStringConverter"/>
+        <local:EmployeeSelectionConverter x:Key="EmployeeSelectionConverter"/>
+    </Window.Resources>
     <Border CornerRadius="50"
             BorderThickness="5">
         <Border.BorderBrush>
@@ -155,9 +159,86 @@
                        Foreground="White"
                        FontSize="15"
                        VerticalAlignment="Top" Width="357" Height="33"/>
+
+
+            <Grid Margin="32,70,42,126" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Morning Shift -->
+                <StackPanel Grid.Column="0" Margin="10">
+                    <TextBlock Text="Morning Shift" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
+                    <ListBox x:Name="MorningShiftListBox" ItemsSource="{Binding MorningShiftEmployees}" 
+                     DisplayMemberPath="FullName" SelectionMode="Multiple" 
+                     MaxHeight="200" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+
+                <!-- Afternoon Shift -->
+                <StackPanel Grid.Column="1" Margin="10">
+                    <TextBlock Text="Afternoon Shift" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
+                    <ListBox x:Name="AfternoonShiftListBox" ItemsSource="{Binding AfternoonShiftEmployees}" 
+                     DisplayMemberPath="FullName" SelectionMode="Multiple" 
+                     MaxHeight="200" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+
+                <!-- Evening Shift -->
+                <StackPanel Grid.Column="2" Margin="10">
+                    <TextBlock Text="Evening Shift" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
+                    <ListBox x:Name="EveningShiftListBox" ItemsSource="{Binding EveningShiftEmployees}" 
+                     DisplayMemberPath="FullName" SelectionMode="Multiple" 
+                     MaxHeight="200" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+            </Grid>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <Button Content="Αποθήκευση" 
+                    HorizontalAlignment="Left" 
+                    Margin="466,416,0,0" 
+                    Grid.Row="1" 
+                    VerticalAlignment="Top" 
+                    RenderTransformOrigin="0.376,-1.161" 
+                    Height="42" Width="126" 
+                    Command="{Binding SaveCommand}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <!--<Setter Property="TextElement.FontFamily" Value="".>-->
+                        <Setter Property="Background" Value="DarkOrange"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100" Height="25"
+                                CornerRadius="12"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
             <Button Content="Επόμενο" 
                     HorizontalAlignment="Left" 
-                    Margin="591,426,0,0" 
+                    Margin="597,416,0,0" 
                     Grid.Row="1" 
                     VerticalAlignment="Top" 
                     RenderTransformOrigin="0.376,-1.161" 
@@ -186,67 +267,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <DataGrid Grid.Row="1" x:Name="VacationGrid" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="Column" Margin="24,99,24,129">
-                <DataGrid.Columns>
-                    <!-- Morning Shift -->
-                    <DataGridTemplateColumn Header="Morning Shift" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ItemsControl ItemsSource="{Binding Employees}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox Content="{Binding EmpFirstname}" 
-                                          IsChecked="{Binding Path=DataContext.MorningShiftEmployees, 
-                                                     Mode=TwoWay, 
-                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
-                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <!-- Afternoon Shift -->
-                    <DataGridTemplateColumn Header="Afternoon Shift" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ItemsControl ItemsSource="{Binding Employees}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox Content="{Binding EmpFirstname}" 
-                                          IsChecked="{Binding Path=DataContext.AfternoonShiftEmployees, 
-                                                     Mode=TwoWay, 
-                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
-                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <!-- Evening Shift -->
-                    <DataGridTemplateColumn Header="Evening Shift" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ItemsControl ItemsSource="{Binding Employees}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox Content="{Binding EmpFirstname}" 
-                                          IsChecked="{Binding Path=DataContext.EveningShiftEmployees, 
-                                                     Mode=TwoWay, 
-                                                     RelativeSource={RelativeSource AncestorType=DataGridRow}, 
-                                                     Converter={StaticResource EmployeeSelectionConverter}}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
 
 
 

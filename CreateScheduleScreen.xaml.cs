@@ -80,8 +80,8 @@ namespace WpfApp2
             Department selectedDepartment = (Department)Department.SelectedItem;
 
             if (selectedDepartment != null) {
-                // Open Monday Vacation screen
-                AddMondayVacationScreen addMondayVacationScreen = new AddMondayVacationScreen();
+                int departmentId = selectedDepartment.DepId;
+                AddMondayVacationScreen addMondayVacationScreen = new AddMondayVacationScreen(departmentId);
                 addMondayVacationScreen.Show();
                 this.Hide();
             } else {

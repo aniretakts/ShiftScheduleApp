@@ -22,5 +22,7 @@ namespace WpfApp2
         public string EmpDepName { get; set; }
         public string EmplLevelName { get; set; }
 
+        public string FullName => $"{EmpFirstname} {EmpLastname}";
+
     }
 }
