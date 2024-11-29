@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,8 +33,18 @@ namespace WpfApp2
             MorningShiftEmployees = new ObservableCollection<Employee>(filteredEmployees);
             AfternoonShiftEmployees = new ObservableCollection<Employee>(filteredEmployees);
             EveningShiftEmployees = new ObservableCollection<Employee>(filteredEmployees);
+
+            // Load employees based on department (you may want to add your logic here)
+            MorningShiftEmployees = new ObservableCollection<Employee>(_employeeService.GetEmployeesByShift(selectedDepartment, ShiftType.Morning));
+            AfternoonShiftEmployees = new ObservableCollection<Employee>(_employeeService.GetEmployeesByShift(selectedDepartment, ShiftType.Afternoon));
+            EveningShiftEmployees = new ObservableCollection<Employee>(_employeeService.GetEmployeesByShift(selectedDepartment, ShiftType.Evening));
         }
 
-       
+
+        // Implementation of INotifyPropertyChanged (if needed)
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+
     }
 }

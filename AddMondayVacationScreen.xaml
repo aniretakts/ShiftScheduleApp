@@ -331,7 +331,9 @@
                     VerticalAlignment="Top" 
                     RenderTransformOrigin="0.376,-1.161" 
                     Height="42" Width="126" 
-                    Command="{Binding SaveCommand}">
+                    Click="DaySave_Click">
+                    <!--Command="{Binding SaveCommand}"-->
+
                 <Button.Style>
                     <Style TargetType="Button">
                         <!--<Setter Property="TextElement.FontFamily" Value="".>-->

@@ -73,5 +73,32 @@ namespace WpfApp2
                 command.ExecuteNonQuery();
             }
         }
+
+        // Get employees by department and shift type (dummy implementation assuming shifts are assigned elsewhere)
+        public List<Employee> GetEmployeesByShift(int departmentId, ShiftType shiftType)
+        {
+            // Ideally, you'd have a way to assign employees to shifts in your system.
+            // This is a simple placeholder implementation:
+            List<Employee> employees = GetEmployees();
+
+            // Filter employees based on department (and possibly shift, if there's a way to store shift data)
+            return employees.Where(emp => emp.EmpDep == departmentId).ToList();
+        }
+
+
+        public void AddVacation(VacationTbl vacation)
+        {
+            string query = "INSERT INTO VacationTbl (EmployeeId, Date, Shift) VALUES (@EmployeeId, @Date, @Shift)";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@EmployeeId", vacation.EmployeeId);
+                command.Parameters.AddWithValue("@Date", vacation.Date);
+                command.Parameters.AddWithValue("@Shift", vacation.Shift.ToString()); // Shift enum as string
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
     }
 }

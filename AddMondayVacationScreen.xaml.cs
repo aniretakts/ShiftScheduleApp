@@ -20,13 +20,16 @@ namespace WpfApp2
     /// </summary>
     public partial class AddMondayVacationScreen : Window
     {
-        private readonly EmployeeService _employeeService;    
+        private readonly EmployeeService _employeeService;
+        private DateTime _savedDate;
+        private readonly AddMondayVacationViewModel _viewModel;
 
         public AddMondayVacationScreen(int selectedDepartment)
         {
             InitializeComponent();
             _employeeService = new EmployeeService();
-            DataContext = new AddMondayVacationViewModel(selectedDepartment);
+            DataContext = new AddMondayVacationViewModel(selectedDepartment); // to load the ListBox
+            _viewModel = new AddMondayVacationViewModel(selectedDepartment); // to save the data 
             //LoadShiftData();
         }
 
@@ -96,7 +99,51 @@ namespace WpfApp2
             }
         }
 
-        // Variable to store the selected date
-        private DateTime _savedDate;
+
+        private void DaySave_Click(object sender, RoutedEventArgs e)
+        {
+            // Check if a date is selected
+            if (_savedDate != DateTime.MinValue)
+            {
+                // Get selected date
+                DateTime selectedDate = _savedDate;
+
+                // Get selected employees from each shift
+                var selectedMorningShift = MorningShiftListBox.SelectedItems.Cast<Employee>().ToList();
+                var selectedAfternoonShift = AfternoonShiftListBox.SelectedItems.Cast<Employee>().ToList();
+                var selectedEveningShift = EveningShiftListBox.SelectedItems.Cast<Employee>().ToList();
+
+                // Add vacation records for selected employees
+                AddVacationForShift(selectedMorningShift, selectedDate, ShiftType.Morning);
+                AddVacationForShift(selectedAfternoonShift, selectedDate, ShiftType.Afternoon);
+                AddVacationForShift(selectedEveningShift, selectedDate, ShiftType.Evening);
+
+                // Optionally, notify user that save was successful
+                MessageBox.Show("Vacations saved successfully!");
+            }
+            else
+            {
+                MessageBox.Show("Please select a date.");
+            }
+        }
+
+        // Helper method to save vacation records for a given shift
+        private void AddVacationForShift(List<Employee> employees, DateTime vacationDate, ShiftType shiftType)
+        {
+            foreach (var employee in employees)
+            {
+                var vacation = new VacationTbl
+                {
+                    EmployeeId = employee.EmpId, // Assuming Employee has EmpId
+                    Date = vacationDate,
+                    Shift = shiftType
+                };
+
+                // Save vacation to database (you might need to call your EmployeeService or use EF)
+                _employeeService.AddVacation(vacation);
+            }
+        }
+
+
     }
 }
