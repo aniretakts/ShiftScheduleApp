@@ -110,6 +110,7 @@
     <Compile Include="VacationEveningShift.cs" />
     <Compile Include="VacationMorningShift.cs" />
     <Compile Include="VacationService.cs" />
+    <Compile Include="VacationTbl.cs" />
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>
     </Compile>

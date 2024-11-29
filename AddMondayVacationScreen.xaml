@@ -151,25 +151,51 @@
                 </Button>
             </Grid>
 
-            <TextBlock Text="Συμπληρώστε τις άδειες για τη Δευτέρα" 
+            <TextBlock Text="Επιλέξτε τη μέρα και συμπληρώστε τις άδειες για τη Δευτέρα" 
                        HorizontalAlignment="Left" 
-                       Margin="38,41,0,0" 
+                       Margin="40,10,0,0" 
                        Grid.Row="1" 
                        TextWrapping="Wrap" 
                        Foreground="White"
                        FontSize="15"
-                       VerticalAlignment="Top" Width="357" Height="33"/>
+                       VerticalAlignment="Top" Width="433" Height="33"/>
 
+            <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="40,45,0,437" Width="200" Grid.Row="1"/>
+            <Button Content="Αποθήκευση ημερομηνίας" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="256,40,0,0" Width="179" Click="SaveDate_Click" Height="38" Grid.Row="1">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <!--<Setter Property="TextElement.FontFamily" Value="".>-->
+                        <Setter Property="Background" Value="DarkOrange"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
 
-            <Grid Margin="32,70,42,126" Grid.Row="1">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="25"
+                                CornerRadius="12"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Grid Margin="32,88,42,108" Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="239*" />
+                    <ColumnDefinition Width="27*" />
+                    <ColumnDefinition Width="211*"/>
+                    <ColumnDefinition Width="239*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Morning Shift -->
-                <StackPanel Grid.Column="0" Margin="10">
+                <StackPanel Grid.Column="0" Margin="10,10,10,10">
                     <TextBlock Text="Morning Shift" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
                     <ListBox x:Name="MorningShiftListBox" ItemsSource="{Binding MorningShiftEmployees}" 
                      DisplayMemberPath="FullName" SelectionMode="Multiple" 
@@ -212,7 +238,7 @@
                 </StackPanel>
 
                 <!-- Afternoon Shift -->
-                <StackPanel Grid.Column="1" Margin="10">
+                <StackPanel Grid.Column="1" Margin="10,10,10,10" Grid.ColumnSpan="2">
                     <TextBlock Text="Afternoon Shift" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
                     <ListBox x:Name="AfternoonShiftListBox" ItemsSource="{Binding AfternoonShiftEmployees}" 
                      DisplayMemberPath="FullName" SelectionMode="Multiple" 
@@ -255,7 +281,7 @@
                 </StackPanel>
 
                 <!-- Evening Shift -->
-                <StackPanel Grid.Column="2" Margin="10">
+                <StackPanel Grid.Column="3" Margin="10,10,10,10">
                     <TextBlock Text="Evening Shift" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" />
                     <ListBox x:Name="EveningShiftListBox" ItemsSource="{Binding EveningShiftEmployees}" 
                      DisplayMemberPath="FullName" SelectionMode="Multiple" 

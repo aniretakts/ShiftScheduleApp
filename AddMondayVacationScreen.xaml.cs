@@ -81,5 +81,22 @@ namespace WpfApp2
         {
 
         }
+
+        private void SaveDate_Click(object sender, RoutedEventArgs e)
+        {
+            if (datePicker.SelectedDate.HasValue)
+            {
+                DateTime selectedDate = datePicker.SelectedDate.Value;
+                MessageBox.Show($"Selected date: {selectedDate.ToShortDateString()}");
+                _savedDate = selectedDate;
+            }
+            else
+            {
+                MessageBox.Show("Please select a date.");
+            }
+        }
+
+        // Variable to store the selected date
+        private DateTime _savedDate;
     }
 }
