@@ -23,5 +23,59 @@ namespace WpfApp2
         {
             InitializeComponent();
         }
+
+        // TODO: to be removed? In all pages that it exists
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Application.Current.Shutdown();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void PersonnelManagementButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the Personnel Management screen
+            PersonnelManagementScreen personnelWindow = new PersonnelManagementScreen();
+            personnelWindow.Show();
+            this.Hide();
+        }
+
+        private void mainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the Welcome screen
+            WelcomeScreen welcomeScreen = new WelcomeScreen();
+            welcomeScreen.Show();
+            this.Hide();
+        }
+
+        private void CreateSchedule_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the Create schedule screen
+            CreateScheduleScreen createScheduleScreen = new CreateScheduleScreen();
+            createScheduleScreen.Show();
+            this.Hide();
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Open the About screen
+            //AboutWindow aboutWindow = new AboutWindow();
+            //aboutWindow.Show();
+        }
     }
 }
