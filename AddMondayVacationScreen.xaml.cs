@@ -23,6 +23,8 @@ namespace WpfApp2
         private readonly EmployeeService _employeeService;
         private DateTime _savedDate;
         private readonly AddMondayVacationViewModel _viewModel;
+        private int _saveCount = 0;
+        private DateTime _expectedDate;
 
         public AddMondayVacationScreen(int selectedDepartment)
         {
@@ -85,29 +87,60 @@ namespace WpfApp2
 
         }
 
-        private void SaveDate_Click(object sender, RoutedEventArgs e)
+
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (datePicker.SelectedDate.HasValue)
             {
                 DateTime selectedDate = datePicker.SelectedDate.Value;
-                MessageBox.Show($"Selected date: {selectedDate.ToShortDateString()}");
-                _savedDate = selectedDate;
+
+                // Check if the date is being saved for the first time in the sequence
+                if (_saveCount == 0)
+                {
+                    if (selectedDate.DayOfWeek == DayOfWeek.Monday)
+                    {
+                        _expectedDate = selectedDate.AddDays(1); // Set next expected date
+                        _saveCount++;
+                        SaveVacationData(selectedDate); // Save vacation data
+                        MessageBox.Show($"Ημέρα που επιλέξατε: {selectedDate.ToShortDateString()}. Στη συνέχεια, επιλέξτε την Τρίτη.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Παρακαλώ επιλέξτε Δευτέρα ως πρώτη ημέρα της εβδομάδας.");
+                    }
+                }
+                else if (_saveCount > 0 && _saveCount < 7)
+                {
+                    if (selectedDate == _expectedDate)
+                    {
+                        _expectedDate = _expectedDate.AddDays(1); // Set next expected date
+                        _saveCount++;
+                        SaveVacationData(selectedDate); // Save vacation data
+                        MessageBox.Show($"Ημέρα που επιλέξατε: {selectedDate.ToShortDateString()}. Αποθηκεύτηκε επιτυχώς.");
+
+                        if (_saveCount == 7)
+                        {
+                            MessageBox.Show("Έχετε επιλέξει επιτυχώς και τις 7 ημέρες της εβδομάδας!");
+                            _saveCount = 0; // Reset for a new round if needed
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Παρακαλώ επιλέξτε τη σωστή ημερομηνία: {_expectedDate.ToShortDateString()}.");
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Please select a date.");
+                MessageBox.Show("Παρακαλώ επιλέξτε μια ημερομηνία.");
             }
         }
 
 
-        private void DaySave_Click(object sender, RoutedEventArgs e)
+        private void SaveVacationData(DateTime selectedDate)
         {
-            // Check if a date is selected
-            if (_savedDate != DateTime.MinValue)
+            if (selectedDate != DateTime.MinValue)
             {
-                // Get selected date
-                DateTime selectedDate = _savedDate;
-
                 // Get selected employees from each shift
                 var selectedMorningShift = MorningShiftListBox.SelectedItems.Cast<Employee>().ToList();
                 var selectedAfternoonShift = AfternoonShiftListBox.SelectedItems.Cast<Employee>().ToList();
@@ -118,14 +151,15 @@ namespace WpfApp2
                 AddVacationForShift(selectedAfternoonShift, selectedDate, ShiftType.Afternoon);
                 AddVacationForShift(selectedEveningShift, selectedDate, ShiftType.Evening);
 
-                // Optionally, notify user that save was successful
-                MessageBox.Show("Vacations saved successfully!");
+                // Optionally, notify the user that vacation data was saved
+                MessageBox.Show($"Οι διακοπές για την ημερομηνία {selectedDate.ToShortDateString()} αποθηκεύτηκαν επιτυχώς!");
             }
             else
             {
-                MessageBox.Show("Please select a date.");
+                MessageBox.Show("Παρακαλώ επιλέξτε μια ημερομηνία.");
             }
         }
+
 
         // Helper method to save vacation records for a given shift
         private void AddVacationForShift(List<Employee> employees, DateTime vacationDate, ShiftType shiftType)

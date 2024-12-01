@@ -161,30 +161,6 @@
                        VerticalAlignment="Top" Width="433" Height="33"/>
 
             <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="40,45,0,437" Width="200" Grid.Row="1"/>
-            <Button Content="Αποθήκευση ημερομηνίας" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="256,40,0,0" Width="179" Click="SaveDate_Click" Height="38" Grid.Row="1">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <!--<Setter Property="TextElement.FontFamily" Value="".>-->
-                        <Setter Property="Background" Value="DarkOrange"/>
-                        <Setter Property="Cursor" Value="Hand"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="DarkRed"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="150" Height="25"
-                                CornerRadius="12"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
 
             <Grid Margin="32,88,42,108" Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -331,7 +307,7 @@
                     VerticalAlignment="Top" 
                     RenderTransformOrigin="0.376,-1.161" 
                     Height="42" Width="126" 
-                    Click="DaySave_Click">
+                    Click="Save_Click">
                     <!--Command="{Binding SaveCommand}"-->
 
                 <Button.Style>

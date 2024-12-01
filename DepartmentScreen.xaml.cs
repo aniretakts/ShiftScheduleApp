@@ -23,7 +23,7 @@ namespace WpfApp2
     /// </summary>
     public partial class DepartmentScreen : Window
     {
-        Functions Con;
+        //Functions Con;
         private readonly DepartmentService _departmentService;
         public DepartmentScreen()
         {
