@@ -88,6 +88,9 @@
       <DependentUpon>DepartmentScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="DepartmentService.cs" />
+    <Compile Include="DownloadWeeklyScheduleScreen.xaml.cs">
+      <DependentUpon>DownloadWeeklyScheduleScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeListToStringConverter.cs" />
     <Compile Include="EmployeeScreen.xaml.cs">
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DepartmentScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DownloadWeeklyScheduleScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

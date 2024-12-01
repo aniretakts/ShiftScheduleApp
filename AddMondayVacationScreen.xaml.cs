@@ -102,7 +102,7 @@ namespace WpfApp2
                         _expectedDate = selectedDate.AddDays(1); // Set next expected date
                         _saveCount++;
                         SaveVacationData(selectedDate); // Save vacation data
-                        MessageBox.Show($"Ημέρα που επιλέξατε: {selectedDate.ToShortDateString()}. Στη συνέχεια, επιλέξτε την Τρίτη.");
+                        MessageBox.Show($"Η ημέρα που επιλέξατε: {selectedDate.ToShortDateString()} και οι διακοπές αποθηκεύτηκαν επιτυχώς. Στη συνέχεια, επιλέξτε την Τρίτη.");
                     }
                     else
                     {
@@ -116,12 +116,15 @@ namespace WpfApp2
                         _expectedDate = _expectedDate.AddDays(1); // Set next expected date
                         _saveCount++;
                         SaveVacationData(selectedDate); // Save vacation data
-                        MessageBox.Show($"Ημέρα που επιλέξατε: {selectedDate.ToShortDateString()}. Αποθηκεύτηκε επιτυχώς.");
+                        MessageBox.Show($"Η ημέρα που επιλέξατε: {selectedDate.ToShortDateString()} και οι διακοπές αποθηκεύτηκαν επιτυχώς. Επιλέξτε την επόμενη συνεχόμενη ημέρα και άδειες.");
 
                         if (_saveCount == 7)
                         {
-                            MessageBox.Show("Έχετε επιλέξει επιτυχώς και τις 7 ημέρες της εβδομάδας!");
+                            MessageBox.Show("Έχετε επιλέξει επιτυχώς και τις 7 ημέρες της εβδομάδας! Θα μεταβείτε στην οθόνη αποθήκευσης του προγράμματος");
                             _saveCount = 0; // Reset for a new round if needed
+                            DownloadWeeklyScheduleScreen downloadWeeklyScheduleScreen = new DownloadWeeklyScheduleScreen();
+                            downloadWeeklyScheduleScreen.Show();
+                            this.Hide();
                         }
                     }
                     else
@@ -152,7 +155,7 @@ namespace WpfApp2
                 AddVacationForShift(selectedEveningShift, selectedDate, ShiftType.Evening);
 
                 // Optionally, notify the user that vacation data was saved
-                MessageBox.Show($"Οι διακοπές για την ημερομηνία {selectedDate.ToShortDateString()} αποθηκεύτηκαν επιτυχώς!");
+                //MessageBox.Show($"Οι διακοπές για την ημερομηνία {selectedDate.ToShortDateString()} αποθηκεύτηκαν επιτυχώς!");
             }
             else
             {
