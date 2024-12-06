@@ -154,7 +154,18 @@
                    Width="194"
                    Source="/Images/Logo.png"/>
 
-
+            <Button Foreground="White"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    FontWeight="Medium" 
+                    Margin="395,182,0,0"
+                    Click="DownloadButton_Click" Grid.Row="1">
+                <Button.Content>
+                    <Image Source="Images/download-icon.png" Width="109" Height="45"/>
+                </Button.Content>
+            </Button>
 
 
         </Grid>
