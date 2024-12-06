@@ -25,10 +25,12 @@ namespace WpfApp2
         private readonly AddMondayVacationViewModel _viewModel;
         private int _saveCount = 0;
         private DateTime _expectedDate;
+        private readonly int _selectedDepartment;
 
         public AddMondayVacationScreen(int selectedDepartment)
         {
             InitializeComponent();
+            _selectedDepartment = selectedDepartment;
             _employeeService = new EmployeeService();
             DataContext = new AddMondayVacationViewModel(selectedDepartment); // to load the ListBox
             _viewModel = new AddMondayVacationViewModel(selectedDepartment); // to save the data 
@@ -122,7 +124,7 @@ namespace WpfApp2
                         {
                             MessageBox.Show("Έχετε επιλέξει επιτυχώς και τις 7 ημέρες της εβδομάδας! Θα μεταβείτε στην οθόνη αποθήκευσης του προγράμματος");
                             _saveCount = 0; // Reset for a new round if needed
-                            DownloadWeeklyScheduleScreen downloadWeeklyScheduleScreen = new DownloadWeeklyScheduleScreen();
+                            DownloadWeeklyScheduleScreen downloadWeeklyScheduleScreen = new DownloadWeeklyScheduleScreen(_selectedDepartment, selectedDate);
                             downloadWeeklyScheduleScreen.Show();
                             this.Hide();
                         }

@@ -22,8 +22,12 @@ namespace WpfApp2
     /// </summary>
     public partial class DownloadWeeklyScheduleScreen : Window
     {
-        public DownloadWeeklyScheduleScreen()
+        private readonly int _selectedDepartment;
+        private readonly DateTime _lastValidDate;
+        public DownloadWeeklyScheduleScreen(int selectedDepartment, DateTime lastValidDate)
         {
+            _selectedDepartment = selectedDepartment;
+            _lastValidDate = lastValidDate;
             InitializeComponent();
         }
 
@@ -98,7 +102,7 @@ namespace WpfApp2
                 // Optional: Draw something on the page (e.g., text or shapes)
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 XFont font = new XFont("Verdana", 20);
-                gfx.DrawString("This is an empty A4 PDF", font, XBrushes.Black,
+                gfx.DrawString("This is an empty A4 PDF for the department: " + _selectedDepartment + " for the week finishing on: " + _lastValidDate, font, XBrushes.Black,
                     new XRect(XUnit.FromPoint(0).Point, XUnit.FromPoint(0).Point, page.Width.Point, page.Height.Point), XStringFormats.Center);
 
                 // Step 3: Save the PDF to a temporary location
