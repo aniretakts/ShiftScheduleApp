@@ -91,15 +91,15 @@ namespace WpfApp2
 
                 // Step 2: Create an A4-sized page
                 PdfPage page = new PdfPage();
-                page.Width = 595; // A4 width in points
-                page.Height = 842; // A4 height in points
+                page.Width = XUnit.FromPoint(595); // A4 width in points
+                page.Height = XUnit.FromPoint(842); // A4 height in points
                 document.AddPage(page);
 
                 // Optional: Draw something on the page (e.g., text or shapes)
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 XFont font = new XFont("Verdana", 20);
                 gfx.DrawString("This is an empty A4 PDF", font, XBrushes.Black,
-                    new XRect(0, 0, page.Width, page.Height), XStringFormats.Center);
+                    new XRect(XUnit.FromPoint(0).Point, XUnit.FromPoint(0).Point, page.Width.Point, page.Height.Point), XStringFormats.Center);
 
                 // Step 3: Save the PDF to a temporary location
                 string tempFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "EmptyA4File.pdf");
