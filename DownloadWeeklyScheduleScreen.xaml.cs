@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Web.Configuration;
 
 namespace WpfApp2
 {
@@ -24,6 +25,7 @@ namespace WpfApp2
     {
         private readonly int _selectedDepartment;
         private readonly DateTime _lastValidDate;
+
         public DownloadWeeklyScheduleScreen(int selectedDepartment, DateTime lastValidDate)
         {
             _selectedDepartment = selectedDepartment;
@@ -85,34 +87,72 @@ namespace WpfApp2
             //aboutWindow.Show();
         }
 
-        private void DownloadButton_Click(object sender, RoutedEventArgs e)
+        private void DownloadVacationReport_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Step 1: Create a new PDF document
+                // Initialize the EmployeeService
+                EmployeeService service = new EmployeeService();
+
+                // Fetch vacation data for the week ending _lastValidDate
+                var lastWeekVacations = service.GetVacationsForWeek(_lastValidDate);
+                var firstValidDate = _lastValidDate.AddDays(-6);
+
+                // Create a new PDF document
                 PdfDocument document = new PdfDocument();
-                document.Info.Title = "Empty PDF";
+                document.Info.Title = "Vacation Report";
 
-                // Step 2: Create an A4-sized page
-                PdfPage page = new PdfPage();
-                page.Width = XUnit.FromPoint(595); // A4 width in points
-                page.Height = XUnit.FromPoint(842); // A4 height in points
-                document.AddPage(page);
-
-                // Optional: Draw something on the page (e.g., text or shapes)
+                // Add a new A4 page
+                PdfPage page = document.AddPage();
                 XGraphics gfx = XGraphics.FromPdfPage(page);
-                XFont font = new XFont("Verdana", 20);
-                gfx.DrawString("This is an empty A4 PDF for the department: " + _selectedDepartment + " for the week finishing on: " + _lastValidDate, font, XBrushes.Black,
-                    new XRect(XUnit.FromPoint(0).Point, XUnit.FromPoint(0).Point, page.Width.Point, page.Height.Point), XStringFormats.Center);
+                XFont headerFont = new XFont("Verdana", 20);
+                XFont contentFont = new XFont("Verdana", 12);
 
-                // Step 3: Save the PDF to a temporary location
-                string tempFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "EmptyA4File.pdf");
-                document.Save(tempFilePath);
+                // Header
+                gfx.DrawString($"Vacation Report - {_selectedDepartment}", headerFont, XBrushes.Black,
+                    new XRect(0, 50, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
+                gfx.DrawString($"Week starting: {firstValidDate:MMMM dd, yyyy}", contentFont, XBrushes.Black,
+                    new XRect(0, 90, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
+                gfx.DrawString($"Week ending: {_lastValidDate:MMMM dd, yyyy}", contentFont, XBrushes.Black,
+                    new XRect(0, 120, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
 
-                // Step 4: Open the PDF file
+                // Table headers
+                double startY = 160;
+                double lineHeight = 20;
+
+                gfx.DrawString("Employee ID", contentFont, XBrushes.Black, new XRect(50, startY, 100, lineHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Date", contentFont, XBrushes.Black, new XRect(200, startY, 100, lineHeight), XStringFormats.TopLeft);
+                gfx.DrawString("Shift", contentFont, XBrushes.Black, new XRect(350, startY, 100, lineHeight), XStringFormats.TopLeft);
+
+                startY += lineHeight;
+
+                // Populate table
+                foreach (var vacation in lastWeekVacations)
+                {
+                    gfx.DrawString(vacation.EmployeeId.ToString(), contentFont, XBrushes.Black, new XRect(50, startY, 100, lineHeight), XStringFormats.TopLeft);
+                    gfx.DrawString(vacation.Date.ToString("MMMM dd, yyyy"), contentFont, XBrushes.Black, new XRect(200, startY, 100, lineHeight), XStringFormats.TopLeft);
+                    gfx.DrawString(vacation.Shift.ToString(), contentFont, XBrushes.Black, new XRect(350, startY, 100, lineHeight), XStringFormats.TopLeft);
+
+                    startY += lineHeight;
+
+                    // Add new page if needed
+                    if (startY > page.Height.Point - 50)
+                    {
+                        page = document.AddPage();
+                        gfx = XGraphics.FromPdfPage(page);
+                        startY = 50; // Reset start position
+                    }
+                }
+
+                // Save the PDF to the Downloads folder
+                string downloadsFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
+                string filePath = System.IO.Path.Combine(downloadsFolderPath, "VacationReport.pdf");
+                document.Save(filePath);
+
+                // Open the file
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = tempFilePath,
+                    FileName = filePath,
                     UseShellExecute = true
                 });
             }

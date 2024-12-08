@@ -31,6 +31,10 @@
         </Border.Background>
 
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="86*"/>
+                <ColumnDefinition Width="309*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
@@ -146,13 +150,20 @@
             </Grid>
 
 
+            <TextBlock Text="Download Vacation Report"
+                       TextWrapping="Wrap"    
+                       Foreground="White"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        VerticalAlignment="Top"
+                        Margin="184,112,184,0" Grid.Row="1" Height="39" Grid.Column="1"/>
             <Image HorizontalAlignment="Left" 
                    Height="141" 
                    Margin="118,112,0,0" 
                    Grid.Row="1" 
                    VerticalAlignment="Top" 
                    Width="194"
-                   Source="/Images/Logo.png"/>
+                   Source="/Images/Logo.png" Grid.ColumnSpan="2"/>
 
             <Button Foreground="White"
                     Background="Transparent"
@@ -160,12 +171,21 @@
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     FontWeight="Medium" 
-                    Margin="395,182,0,0"
-                    Click="DownloadButton_Click" Grid.Row="1">
+                    Margin="223,150,0,0"
+                    Click="DownloadVacationReport_Click" Grid.Row="1" Grid.Column="1">
                 <Button.Content>
-                    <Image Source="Images/download-icon.png" Width="109" Height="45"/>
+                    <Image Source="Images/download-icon.png" Width="59" Height="33"/>
                 </Button.Content>
             </Button>
+
+
+            <TextBlock Text="Download Week's Schedule"
+                       TextWrapping="Wrap"    
+                       Foreground="White"
+                        FontSize="20"
+                        FontWeight="Medium"
+                        VerticalAlignment="Top"
+                        Margin="184,200,143,0" Grid.Row="1" Height="39" Grid.Column="1"/>
 
 
         </Grid>
