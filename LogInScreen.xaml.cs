@@ -25,13 +25,6 @@ namespace WpfApp2
         public string Username { get; set; }
         public string Password { get; set; }
 
-
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            Application.Current.Shutdown();
-        }
-
         public LogInScreen()
         {
             InitializeComponent();

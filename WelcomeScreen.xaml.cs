@@ -20,11 +20,6 @@ namespace WpfApp2
     /// </summary>
     public partial class WelcomeScreen : Window
     {
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            Application.Current.Shutdown();
-        }
 
         public WelcomeScreen()
         {

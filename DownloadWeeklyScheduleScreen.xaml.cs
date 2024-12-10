@@ -34,13 +34,6 @@ namespace WpfApp2
             InitializeComponent();
         }
 
-        // TODO: to be removed? In all pages that it exists
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            Application.Current.Shutdown();
-        }
-
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
