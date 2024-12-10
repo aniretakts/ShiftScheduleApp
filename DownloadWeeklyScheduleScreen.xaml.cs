@@ -164,5 +164,10 @@ namespace WpfApp2
             }
 
         }
+
+
+        private void DownloadWeeklySchedule_Click(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }
