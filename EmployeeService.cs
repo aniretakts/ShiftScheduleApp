@@ -152,6 +152,41 @@ namespace WpfApp2
             return vacations;
         }
 
+        public List<Employee> GetAllEmployeesPerDepartment(int departmentId)
+        {
+            List<Employee> employees = new List<Employee>();
+            string query = "SELECT EmpId, EmpFirstname, EmpLastname, EmpDep, EmpBirthdate, EmpJoinDate, EmpSalary, EmplLevel " +
+                           "FROM EmployeeTbl " +
+                           "WHERE EmpDep = @DepartmentId";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@DepartmentId", departmentId);
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        employees.Add(new Employee
+                        {
+                            EmpId = reader.GetInt32(0),
+                            EmpFirstname = reader.GetString(1),
+                            EmpLastname = reader.GetString(2),
+                            EmpDep = reader.GetInt32(3),
+                            EmpBirthdate = reader.GetDateTime(4),
+                            EmpJoinDate = reader.GetDateTime(5),
+                            EmpSalary = reader.GetInt32(6),
+                            EmplLevel = reader.GetInt32(7)
+                        });
+                    }
+                }
+            }
+
+            return employees;
+        }
 
     }
 }
