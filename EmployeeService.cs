@@ -105,10 +105,19 @@ namespace WpfApp2
         {
             List<VacationTbl> vacations = new List<VacationTbl>();
             DateTime weekStartDate = weekEndDate.AddDays(-6); // Week starts 6 days before the end date
-            string query = "SELECT v.VacationId, v.EmployeeId, v.Date, v.Shift, e.EmpId " +
-                           "FROM VacationTbl v " +
-                           "JOIN EmployeeTbl e ON v.EmployeeId = e.EmpId " +
-                           "WHERE v.Date BETWEEN @WeekStartDate AND @WeekEndDate";
+
+            string query = @"SELECT v.VacationId, 
+                                    v.EmployeeId, 
+                                    v.Date, 
+                                    v.Shift, 
+                                    e.EmpId, 
+                                    e.EmpFirstname, 
+                                    e.EmpLastname, 
+                                    d.DepName 
+                            FROM VacationTbl v 
+                            JOIN EmployeeTbl e ON v.EmployeeId = e.EmpId 
+                            JOIN DepartmentTbl d ON e.EmpDep = d.DepId
+                            WHERE v.Date BETWEEN @WeekStartDate AND @WeekEndDate";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -122,20 +131,19 @@ namespace WpfApp2
                 {
                     while (reader.Read())
                     {
-
                         vacations.Add(new VacationTbl
                         {
                             VacationId = reader.GetInt32(0),
                             EmployeeId = reader.GetInt32(1),
                             Date = reader.GetDateTime(2),
                             Shift = (ShiftType)Enum.Parse(typeof(ShiftType), reader.GetString(3)),
-                            Employee = new Employee { EmpId = reader.GetInt32(4) } // Simplified
-                            //Employee = new Employee
-                            //{
-                            //    EmpId = reader.GetInt32(4),
-                            //    EmpFirstname = reader.GetString(5), // Assuming this is the column index for EmpFirstname
-                            //    EmpLastname = reader.GetString(6)  // Assuming this is the column index for EmpLastname
-                            //}
+                            Employee = new Employee
+                            {
+                                EmpId = reader.GetInt32(4),
+                                EmpFirstname = reader.GetString(5),
+                                EmpLastname = reader.GetString(6),
+                                EmpDepName = reader.GetString(7) // Department Name
+                            }
                         });
                     }
                 }
@@ -143,6 +151,7 @@ namespace WpfApp2
 
             return vacations;
         }
+
 
     }
 }

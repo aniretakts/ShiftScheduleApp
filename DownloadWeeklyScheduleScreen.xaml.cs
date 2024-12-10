@@ -108,8 +108,10 @@ namespace WpfApp2
                 XFont headerFont = new XFont("Verdana", 20);
                 XFont contentFont = new XFont("Verdana", 12);
 
+                string departmentName = lastWeekVacations.FirstOrDefault()?.Employee?.EmpDepName ?? "Unknown Department";
+
                 // Header
-                gfx.DrawString($"Vacation Report - {_selectedDepartment}", headerFont, XBrushes.Black,
+                gfx.DrawString($"Vacation Report - {departmentName}", headerFont, XBrushes.Black,
                     new XRect(0, 50, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
                 gfx.DrawString($"Week starting: {firstValidDate:MMMM dd, yyyy}", contentFont, XBrushes.Black,
                     new XRect(0, 90, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
@@ -129,7 +131,7 @@ namespace WpfApp2
                 // Populate table
                 foreach (var vacation in lastWeekVacations)
                 {
-                    gfx.DrawString(vacation.EmployeeId.ToString(), contentFont, XBrushes.Black, new XRect(50, startY, 100, lineHeight), XStringFormats.TopLeft);
+                    gfx.DrawString(vacation.Employee.FullName.ToString(), contentFont, XBrushes.Black, new XRect(50, startY, 100, lineHeight), XStringFormats.TopLeft);
                     gfx.DrawString(vacation.Date.ToString("MMMM dd, yyyy"), contentFont, XBrushes.Black, new XRect(200, startY, 100, lineHeight), XStringFormats.TopLeft);
                     gfx.DrawString(vacation.Shift.ToString(), contentFont, XBrushes.Black, new XRect(350, startY, 100, lineHeight), XStringFormats.TopLeft);
 
