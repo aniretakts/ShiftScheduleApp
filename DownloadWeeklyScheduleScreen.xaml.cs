@@ -105,10 +105,9 @@ namespace WpfApp2
                 string departmentName = lastWeekVacations.FirstOrDefault()?.Employee?.EmpDepName ?? "Unknown Department";
 
                 // Header
-                gfx.DrawString($"Vacation Report - {departmentName}", headerFont, XBrushes.Black,
-                    new XRect(0, 50, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
-                gfx.DrawString($"Week: {monday:MMMM dd, yyyy} - {sunday:MMMM dd, yyyy}", contentFont, XBrushes.Black,
-                new XRect(0, 90, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
+                gfx.DrawString($"Vacation Report - {departmentName}", headerFont, XBrushes.Black, new XRect(0, 50, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
+                gfx.DrawString($"Week: {monday:MMMM dd, yyyy} - {sunday:MMMM dd, yyyy}", contentFont, XBrushes.Black, new XRect(0, 90, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
+                gfx.DrawLine(XPens.Black, 50, 110, page.Width.Point - 50, 110);
 
                 // Table headers
                 double startY = 130;
@@ -117,6 +116,7 @@ namespace WpfApp2
                 gfx.DrawString("Employee ID", contentFont, XBrushes.Black, new XRect(50, startY, 100, lineHeight), XStringFormats.TopLeft);
                 gfx.DrawString("Date", contentFont, XBrushes.Black, new XRect(200, startY, 100, lineHeight), XStringFormats.TopLeft);
                 gfx.DrawString("Shift", contentFont, XBrushes.Black, new XRect(350, startY, 100, lineHeight), XStringFormats.TopLeft);
+                gfx.DrawLine(XPens.Black, 50, startY + lineHeight - 5, page.Width.Point - 50, startY + lineHeight - 5);
 
                 startY += lineHeight;
 
@@ -140,6 +140,8 @@ namespace WpfApp2
                         gfx.DrawString("Employee ID", contentFont, XBrushes.Black, new XRect(50, startY, 100, lineHeight), XStringFormats.TopLeft);
                         gfx.DrawString("Day", contentFont, XBrushes.Black, new XRect(200, startY, 100, lineHeight), XStringFormats.TopLeft);
                         gfx.DrawString("Shift", contentFont, XBrushes.Black, new XRect(350, startY, 100, lineHeight), XStringFormats.TopLeft);
+                        gfx.DrawLine(XPens.Black, 50, startY + lineHeight - 5, page.Width.Point - 50, startY + lineHeight - 5);
+
                         startY += lineHeight;
                     }
                 }
@@ -202,10 +204,9 @@ namespace WpfApp2
 
 
                 // Header
-                gfx.DrawString("Weekly Schedule", headerFont, XBrushes.Black,
-                    new XRect(0, 50, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
-                gfx.DrawString($"Week: {monday:MMMM dd, yyyy} - {sunday:MMMM dd, yyyy}", contentFont, XBrushes.Black,
-                    new XRect(0, 90, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
+                gfx.DrawString("Weekly Schedule", headerFont, XBrushes.Black, new XRect(0, 50, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
+                gfx.DrawString($"Week: {monday:MMMM dd, yyyy} - {sunday:MMMM dd, yyyy}", contentFont, XBrushes.Black, new XRect(0, 90, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
+                gfx.DrawLine(XPens.Black, 50, 110, page.Width.Point - 50, 110);
 
                 // Table headers
                 double startY = 140;
@@ -214,6 +215,7 @@ namespace WpfApp2
                 gfx.DrawString("Day", contentFont, XBrushes.Black, new XRect(dayColumnX, startY, dayColumnWidth, lineHeight), XStringFormats.TopLeft);
                 gfx.DrawString("Shift", contentFont, XBrushes.Black, new XRect(shiftColumnX, startY, shiftColumnWidth, lineHeight), XStringFormats.TopLeft);
                 gfx.DrawString("Employees", contentFont, XBrushes.Black, new XRect(employeesColumnX, startY, employeesColumnWidth, lineHeight), XStringFormats.TopLeft);
+                gfx.DrawLine(XPens.Black, 50, startY + lineHeight - 5, page.Width.Point - 50, startY + lineHeight - 5);
 
                 startY += lineHeight;
 
@@ -256,8 +258,7 @@ namespace WpfApp2
                         double employeeStartY = startY; // Start position for employee names
                         foreach (var employee in shiftEmployees)
                         {
-                            gfx.DrawString(employee.FullName, contentFont, XBrushes.Black,
-                                new XRect(employeesColumnX, employeeStartY, employeesColumnWidth, lineHeight), XStringFormats.TopLeft);
+                            gfx.DrawString(employee.FullName, contentFont, XBrushes.Black, new XRect(employeesColumnX, employeeStartY, employeesColumnWidth, lineHeight), XStringFormats.TopLeft);
                             employeeStartY += lineHeight; // Move down for the next employee
                         }
 
@@ -272,12 +273,11 @@ namespace WpfApp2
                             startY = 50; // Reset start position
 
                             // Redraw headers on the new page
-                            gfx.DrawString("Day", contentFont, XBrushes.Black,
-                                new XRect(dayColumnX, startY, dayColumnWidth, lineHeight), XStringFormats.TopLeft);
-                            gfx.DrawString("Shift", contentFont, XBrushes.Black,
-                                new XRect(shiftColumnX, startY, shiftColumnWidth, lineHeight), XStringFormats.TopLeft);
-                            gfx.DrawString("Employees", contentFont, XBrushes.Black,
-                                new XRect(employeesColumnX, startY, employeesColumnWidth, lineHeight), XStringFormats.TopLeft);
+                            gfx.DrawString("Day", contentFont, XBrushes.Black, new XRect(dayColumnX, startY, dayColumnWidth, lineHeight), XStringFormats.TopLeft);
+                            gfx.DrawString("Shift", contentFont, XBrushes.Black, new XRect(shiftColumnX, startY, shiftColumnWidth, lineHeight), XStringFormats.TopLeft);
+                            gfx.DrawString("Employees", contentFont, XBrushes.Black, new XRect(employeesColumnX, startY, employeesColumnWidth, lineHeight), XStringFormats.TopLeft);
+                            gfx.DrawLine(XPens.Black, 50, startY + lineHeight - 5, page.Width.Point - 50, startY + lineHeight - 5);
+
                             startY += lineHeight;
                         }
                     }
