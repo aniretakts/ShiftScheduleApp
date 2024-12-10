@@ -21,7 +21,6 @@ namespace WpfApp2
     public partial class AddMondayVacationScreen : Window
     {
         private readonly EmployeeService _employeeService;
-        private DateTime _savedDate;
         private readonly AddMondayVacationViewModel _viewModel;
         private int _saveCount = 0;
         private DateTime _expectedDate;
@@ -56,7 +55,6 @@ namespace WpfApp2
 
         private void mainMenu_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Welcome screen
             WelcomeScreen welcomeScreen = new WelcomeScreen();
             welcomeScreen.Show();
             this.Hide();
@@ -64,7 +62,6 @@ namespace WpfApp2
 
         private void PersonnelManagementButton_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Personnel Management screen
             PersonnelManagementScreen personnelWindow = new PersonnelManagementScreen();
             personnelWindow.Show();
             this.Hide();
@@ -72,7 +69,6 @@ namespace WpfApp2
 
         private void CreateSchedule_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Create schedule screen
             CreateScheduleScreen createScheduleScreen = new CreateScheduleScreen();
             createScheduleScreen.Show();
             this.Hide();

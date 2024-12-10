@@ -46,7 +46,6 @@ namespace WpfApp2
 
         private void PersonnelManagementButton_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Personnel Management screen
             PersonnelManagementScreen personnelWindow = new PersonnelManagementScreen();
             personnelWindow.Show();
             this.Hide();
@@ -54,7 +53,6 @@ namespace WpfApp2
 
         private void mainMenu_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Welcome screen
             WelcomeScreen welcomeScreen = new WelcomeScreen();
             welcomeScreen.Show();
             this.Hide();
@@ -69,7 +67,6 @@ namespace WpfApp2
 
         private void CreateSchedule_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Create Schedule screen
             CreateScheduleScreen createScheduleScreen = new CreateScheduleScreen();
             createScheduleScreen.Show();
             this.Hide();
@@ -77,15 +74,11 @@ namespace WpfApp2
 
         private void Department_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Department screen
             DepartmentScreen departmentScreen = new DepartmentScreen();
             departmentScreen.Show();
             this.Hide();
         }
 
-
-
-        //here 
 
         private void LoadEmployees()
         {

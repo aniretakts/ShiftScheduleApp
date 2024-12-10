@@ -59,7 +59,6 @@ namespace WpfApp2
 
         private void PersonnelManagementButton_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Personnel Management screen
             PersonnelManagementScreen personnelWindow = new PersonnelManagementScreen();
             personnelWindow.Show();
             this.Hide();
@@ -67,7 +66,6 @@ namespace WpfApp2
 
         private void mainMenu_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Welcome screen
             WelcomeScreen welcomeScreen = new WelcomeScreen();
             welcomeScreen.Show();
             this.Hide();
@@ -75,7 +73,6 @@ namespace WpfApp2
 
         private void CreateSchedule_Click(object sender, RoutedEventArgs e)
         {
-            // Open the Create schedule screen
             CreateScheduleScreen createScheduleScreen = new CreateScheduleScreen();
             createScheduleScreen.Show();
             this.Hide();
@@ -117,10 +114,6 @@ namespace WpfApp2
                 // Header
                 gfx.DrawString($"Vacation Report - {departmentName}", headerFont, XBrushes.Black,
                     new XRect(0, 50, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
-                //gfx.DrawString($"Week starting: {firstValidDate:MMMM dd, yyyy}", contentFont, XBrushes.Black,
-                //    new XRect(0, 90, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
-                //gfx.DrawString($"Week ending: {_lastValidDate:MMMM dd, yyyy}", contentFont, XBrushes.Black,
-                //    new XRect(0, 120, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
                 gfx.DrawString($"Week: {monday:MMMM dd, yyyy} - {sunday:MMMM dd, yyyy}", contentFont, XBrushes.Black,
                 new XRect(0, 90, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
 
@@ -149,6 +142,12 @@ namespace WpfApp2
                         page = document.AddPage();
                         gfx = XGraphics.FromPdfPage(page);
                         startY = 50; // Reset start position
+
+                        // Redraw headers on the new page
+                        gfx.DrawString("Employee ID", contentFont, XBrushes.Black, new XRect(50, startY, 100, lineHeight), XStringFormats.TopLeft);
+                        gfx.DrawString("Day", contentFont, XBrushes.Black, new XRect(200, startY, 100, lineHeight), XStringFormats.TopLeft);
+                        gfx.DrawString("Shift", contentFont, XBrushes.Black, new XRect(350, startY, 100, lineHeight), XStringFormats.TopLeft);
+                        startY += lineHeight;
                     }
                 }
 
