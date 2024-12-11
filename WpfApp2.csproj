@@ -144,23 +144,22 @@
     <Compile Include="CreateScheduleScreen.xaml.cs">
       <DependentUpon>CreateScheduleScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Department.cs" />
+    <Compile Include="models\Department.cs" />
     <Compile Include="DepartmentScreen.xaml.cs">
       <DependentUpon>DepartmentScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DepartmentService.cs" />
+    <Compile Include="services\DepartmentService.cs" />
     <Compile Include="DownloadWeeklyScheduleScreen.xaml.cs">
       <DependentUpon>DownloadWeeklyScheduleScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Employee.cs" />
-    <Compile Include="EmployeeListToStringConverter.cs" />
+    <Compile Include="models\Employee.cs" />
     <Compile Include="EmployeeScreen.xaml.cs">
       <DependentUpon>EmployeeScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeService.cs" />
+    <Compile Include="services\EmployeeService.cs" />
     <Compile Include="Functions.cs" />
-    <Compile Include="Level.cs" />
-    <Compile Include="LevelService.cs" />
+    <Compile Include="models\Level.cs" />
+    <Compile Include="services\LevelService.cs" />
     <Compile Include="MyDbContext.cs" />
     <Compile Include="PersonnelManagementScreen.xaml.cs">
       <DependentUpon>PersonnelManagementScreen.xaml</DependentUpon>
@@ -168,9 +167,8 @@
     <Compile Include="Template.xaml.cs">
       <DependentUpon>Template.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vacation.cs" />
-    <Compile Include="VacationService.cs" />
-    <Compile Include="VacationTbl.cs" />
+    <Compile Include="services\VacationService.cs" />
+    <Compile Include="models\VacationTbl.cs" />
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>
     </Compile>

@@ -15,7 +15,6 @@ namespace WpfApp2
         public virtual Employee Employee { get; set; }
     }
 
-    // Enum for Shift
     public enum ShiftType
     {
         Morning,
@@ -23,12 +22,4 @@ namespace WpfApp2
         Evening
     }
 
-    //public class EmployeeTbl
-    //{
-    //    public int EmpId { get; set; } // Primary key
-    //    public string EmpFirstname { get; set; }
-    //    public string EmpLastname { get; set; }
-
-    //    // Add other properties relevant to EmployeeTbl
-    //}
 }

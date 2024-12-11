@@ -12,9 +12,6 @@
         Background="Transparent"
         AllowsTransparency="True"
         MouseDown="Window_MouseDown">
-    <Window.Resources>
-        <local:EmployeeListToStringConverter x:Key="EmployeeListToStringConverter"/>
-    </Window.Resources>
     <Border CornerRadius="50"
             BorderThickness="5">
         <Border.BorderBrush>
