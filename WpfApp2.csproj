@@ -140,9 +140,6 @@
       <DependentUpon>AddMondayVacationScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="AddMondayVacationViewModel.cs" />
-    <Compile Include="AddVacationScreen.xaml.cs">
-      <DependentUpon>AddVacationScreen.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="CreateScheduleScreen.xaml.cs">
       <DependentUpon>CreateScheduleScreen.xaml</DependentUpon>
@@ -160,7 +157,6 @@
     <Compile Include="EmployeeScreen.xaml.cs">
       <DependentUpon>EmployeeScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EmployeeSelectionConverter.cs" />
     <Compile Include="EmployeeService.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Level.cs" />
@@ -173,9 +169,6 @@
       <DependentUpon>Template.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vacation.cs" />
-    <Compile Include="VacationAfternoonShift.cs" />
-    <Compile Include="VacationEveningShift.cs" />
-    <Compile Include="VacationMorningShift.cs" />
     <Compile Include="VacationService.cs" />
     <Compile Include="VacationTbl.cs" />
     <Compile Include="WelcomeScreen.xaml.cs">
@@ -186,10 +179,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddMondayVacationScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="AddVacationScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
