@@ -87,10 +87,10 @@ namespace WpfApp2
 
                 // Fetch vacation data for the week ending _lastValidDate
                 var lastWeekVacations = service.GetVacationsForWeek(_lastValidDate);
-                var firstValidDate = _lastValidDate.AddDays(-6);
+
                 // Calculate week range (Monday to Sunday)
-                DateTime monday = _lastValidDate.AddDays(-(int)_lastValidDate.DayOfWeek + (int)DayOfWeek.Monday);
-                DateTime sunday = monday.AddDays(6);
+                DateTime monday = _lastValidDate.AddDays(-6);
+                DateTime sunday = _lastValidDate;
 
                 // Create a new PDF document
                 PdfDocument document = new PdfDocument();
@@ -146,9 +146,13 @@ namespace WpfApp2
                     }
                 }
 
+                // Format the dates to "yyyy-MM-dd" (or any preferred format)
+                string formattedMonday = monday.ToString("yyyy-MM-dd");
+                string formattedSunday = sunday.ToString("yyyy-MM-dd");
+
                 // Save the PDF to the Downloads folder
                 string downloadsFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
-                string filePath = System.IO.Path.Combine(downloadsFolderPath, "VacationReport.pdf");
+                string filePath = System.IO.Path.Combine(downloadsFolderPath, $"VacationReport-{formattedMonday}-{formattedSunday}.pdf");
                 document.Save(filePath);
 
                 // Open the file
@@ -174,8 +178,8 @@ namespace WpfApp2
                 EmployeeService service = new EmployeeService();
 
                 // Calculate week range (Monday to Sunday)
-                DateTime monday = _lastValidDate.AddDays(-(int)_lastValidDate.DayOfWeek + (int)DayOfWeek.Monday);
-                DateTime sunday = monday.AddDays(6);
+                DateTime monday = _lastValidDate.AddDays(-6);
+                DateTime sunday = _lastValidDate;
 
                 // Fetch employees for scheduling
                 var allEmployees = service.GetAllEmployeesPerDepartment(_selectedDepartment); // Fetch all employees for the department
@@ -283,9 +287,13 @@ namespace WpfApp2
                     }
                 }
 
+                // Format the dates to "yyyy-MM-dd" (or any preferred format)
+                string formattedMonday = monday.ToString("yyyy-MM-dd");
+                string formattedSunday = sunday.ToString("yyyy-MM-dd");
+
                 // Save the PDF to the Downloads folder
                 string downloadsFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
-                string filePath = System.IO.Path.Combine(downloadsFolderPath, "WeeklySchedule.pdf");
+                string filePath = System.IO.Path.Combine(downloadsFolderPath, $"WeeklySchedule-{formattedMonday}-{formattedSunday}.pdf");
                 document.Save(filePath);
 
                 // Open the file
