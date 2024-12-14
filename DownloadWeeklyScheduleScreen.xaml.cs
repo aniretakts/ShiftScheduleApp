@@ -198,7 +198,7 @@ namespace WpfApp2
 
                 // Define column positions and widths
                 double dayColumnX = 50;
-                double dayColumnWidth = 80; // Reduced width for "Day"
+                double dayColumnWidth = 150; 
 
                 double shiftColumnX = dayColumnX + dayColumnWidth + 10;
                 double shiftColumnWidth = 80; // Reduced width for "Shift"
@@ -253,7 +253,9 @@ namespace WpfApp2
                         }
 
                         // Record shift in PDF
-                        gfx.DrawString(day.ToString("dddd"), contentFont, XBrushes.Black,
+                        //gfx.DrawString(day.ToString("dddd"), contentFont, XBrushes.Black,
+                        //    new XRect(dayColumnX, startY, dayColumnWidth, lineHeight), XStringFormats.TopLeft);
+                        gfx.DrawString(day.ToString("dddd, MMMM dd, yyyy"), contentFont, XBrushes.Black,
                             new XRect(dayColumnX, startY, dayColumnWidth, lineHeight), XStringFormats.TopLeft);
                         gfx.DrawString($"Shift {shift}", contentFont, XBrushes.Black,
                             new XRect(shiftColumnX, startY, shiftColumnWidth, lineHeight), XStringFormats.TopLeft);
