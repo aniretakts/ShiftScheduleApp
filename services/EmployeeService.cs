@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 
 namespace WpfApp2
 {
@@ -11,6 +12,7 @@ namespace WpfApp2
     public class EmployeeService
     {
         private readonly string _connectionString = @"Data Source=DESKTOP-6542;Initial Catalog=StathmosDb;Integrated Security=True";
+        //private readonly List<VacationTbl> _vacationTable;
 
         public List<Employee> GetEmployees()
         {
@@ -101,29 +103,28 @@ namespace WpfApp2
             }
         }
 
-        public List<VacationTbl> GetVacationsForWeek(DateTime weekEndDate)
+        public List<VacationTbl> GetVacationsForWeek(DateTime monday, DateTime sunday)
         {
             List<VacationTbl> vacations = new List<VacationTbl>();
-            DateTime weekStartDate = weekEndDate.AddDays(-6); // Week starts 6 days before the end date
 
             string query = @"SELECT v.VacationId, 
-                                    v.EmployeeId, 
-                                    v.Date, 
-                                    v.Shift, 
-                                    e.EmpId, 
-                                    e.EmpFirstname, 
-                                    e.EmpLastname, 
-                                    d.DepName 
-                            FROM VacationTbl v 
-                            JOIN EmployeeTbl e ON v.EmployeeId = e.EmpId 
-                            JOIN DepartmentTbl d ON e.EmpDep = d.DepId
-                            WHERE v.Date BETWEEN @WeekStartDate AND @WeekEndDate";
+                            v.EmployeeId, 
+                            v.Date, 
+                            v.Shift, 
+                            e.EmpId, 
+                            e.EmpFirstname, 
+                            e.EmpLastname, 
+                            d.DepName 
+                    FROM VacationTbl v 
+                    JOIN EmployeeTbl e ON v.EmployeeId = e.EmpId 
+                    JOIN DepartmentTbl d ON e.EmpDep = d.DepId
+                    WHERE v.Date BETWEEN @WeekStartDate AND @WeekEndDate";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@WeekStartDate", weekStartDate);
-                command.Parameters.AddWithValue("@WeekEndDate", weekEndDate);
+                command.Parameters.AddWithValue("@WeekStartDate", monday);
+                command.Parameters.AddWithValue("@WeekEndDate", sunday);
 
                 connection.Open();
 
@@ -151,6 +152,7 @@ namespace WpfApp2
 
             return vacations;
         }
+
 
         public List<Employee> GetAllEmployeesPerDepartment(int departmentId)
         {

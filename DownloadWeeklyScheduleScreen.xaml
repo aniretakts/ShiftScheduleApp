@@ -194,7 +194,7 @@
                     HorizontalAlignment="Left"
                     FontWeight="Medium" 
                     Margin="223,240,0,0"
-                    Click="DownloadWeeklySchedule_Click" Grid.Row="1" Grid.Column="1">
+                    Click="DownloadWeeklySchedule_Click2" Grid.Row="1" Grid.Column="1">
                 <Button.Content>
                     <Image Source="Images/download-icon.png" Width="59" Height="33"/>
                 </Button.Content>

@@ -144,6 +144,7 @@
     <Compile Include="CreateScheduleScreen.xaml.cs">
       <DependentUpon>CreateScheduleScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DateRange.cs" />
     <Compile Include="models\Department.cs" />
     <Compile Include="DepartmentScreen.xaml.cs">
       <DependentUpon>DepartmentScreen.xaml</DependentUpon>

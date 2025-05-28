@@ -147,14 +147,14 @@
                 </Button>
             </Grid>
 
-            <TextBlock Text="Επιλέξτε τη μέρα και συμπληρώστε τις άδειες για τη Δευτέρα" 
+            <TextBlock Text="Επιλέξτε τη μέρα και συμπληρώστε τις άδειες, ξεκινώντας απο τη Δευτέρα" 
                        HorizontalAlignment="Left" 
                        Margin="40,10,0,0" 
                        Grid.Row="1" 
                        TextWrapping="Wrap" 
                        Foreground="White"
                        FontSize="15"
-                       VerticalAlignment="Top" Width="433" Height="33"/>
+                       VerticalAlignment="Top" Width="594" Height="33"/>
 
             <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="40,45,0,437" Width="200" Grid.Row="1"/>
 

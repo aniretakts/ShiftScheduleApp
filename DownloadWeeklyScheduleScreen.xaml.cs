@@ -26,6 +26,7 @@ namespace WpfApp2
         private readonly int _selectedDepartment;
         private readonly DateTime _lastValidDate;
         public const int ExperiencedLevel = 3;
+        private readonly List<VacationTbl> _vacationTable;
 
         public DownloadWeeklyScheduleScreen(int selectedDepartment, DateTime lastValidDate)
         {
@@ -85,12 +86,12 @@ namespace WpfApp2
                 // Initialize the EmployeeService
                 EmployeeService service = new EmployeeService();
 
-                // Fetch vacation data for the week ending _lastValidDate
-                var lastWeekVacations = service.GetVacationsForWeek(_lastValidDate);
-
                 // Calculate week range (Monday to Sunday)
                 DateTime monday = _lastValidDate.AddDays(-6);
                 DateTime sunday = _lastValidDate;
+
+                // Fetch vacation data for the week ending _lastValidDate
+                var lastWeekVacations = service.GetVacationsForWeek(monday, sunday);
 
                 // Create a new PDF document
                 PdfDocument document = new PdfDocument();
@@ -182,7 +183,7 @@ namespace WpfApp2
                 DateTime sunday = _lastValidDate;
 
                 // Fetch employees for scheduling
-                var allEmployees = service.GetAllEmployeesPerDepartment(_selectedDepartment); // Fetch all employees for the department
+                var allEmployees = service.GetAllEmployeesPerDepartment(_selectedDepartment) ?? new List<Employee>();
                 var experiencedEmployees = allEmployees.Where(emp => emp.EmplLevel == ExperiencedLevel).ToList();
                 var otherEmployees = allEmployees.Except(experiencedEmployees).ToList();
 
@@ -198,14 +199,13 @@ namespace WpfApp2
 
                 // Define column positions and widths
                 double dayColumnX = 50;
-                double dayColumnWidth = 150; 
+                double dayColumnWidth = 200;
 
                 double shiftColumnX = dayColumnX + dayColumnWidth + 10;
                 double shiftColumnWidth = 80; // Reduced width for "Shift"
 
                 double employeesColumnX = shiftColumnX + shiftColumnWidth + 10;
                 double employeesColumnWidth = page.Width.Point - employeesColumnX - 50;
-
 
                 // Header
                 gfx.DrawString("Weekly Schedule", headerFont, XBrushes.Black, new XRect(0, 50, page.Width.Point, page.Height.Point), XStringFormats.TopCenter);
@@ -223,38 +223,45 @@ namespace WpfApp2
 
                 startY += lineHeight;
 
-                // Create schedule
+                // Draw table logic with null checks
                 for (DateTime day = monday; day <= sunday; day = day.AddDays(1))
                 {
-                    for (int shift = 1; shift <= 3; shift++)
+                    var shifts = Enum.GetValues(typeof(ShiftType)).Cast<ShiftType>();
+                    foreach (ShiftType shift in shifts)
                     {
-                        var availableEmployees = allEmployees.Where(emp => emp.IsAvailableForShift(day, shift)).ToList();
+                        var availableEmployees = allEmployees
+                            .Where(emp => emp.IsAvailableForShift(emp.EmpId, day, shift))
+                            .ToList() ?? new List<Employee>();
+
                         var shiftEmployees = new List<Employee>();
 
-                        // Assign at least one experienced employee if available
                         var experiencedEmployee = availableEmployees.FirstOrDefault(emp => emp.EmplLevel == ExperiencedLevel);
                         if (experiencedEmployee != null)
                         {
                             shiftEmployees.Add(experiencedEmployee);
+                            if (experiencedEmployee.AssignedShifts == null)
+                            {
+                                experiencedEmployee.AssignedShifts = new List<AssignedShift>();
+                            }
                             experiencedEmployee.AssignedShifts.Add(new AssignedShift { Date = day, Shift = shift });
                             availableEmployees.Remove(experiencedEmployee);
                         }
 
-                        // Fill remaining slots with other employees
                         foreach (var employee in availableEmployees)
                         {
-                            if (shiftEmployees.Count < 3 && employee.IsAvailableForShift(day, shift))
+                            if (shiftEmployees.Count < 3)
                             {
                                 shiftEmployees.Add(employee);
+                                if (employee.AssignedShifts == null)
+                                {
+                                    employee.AssignedShifts = new List<AssignedShift>();
+                                }
                                 employee.AssignedShifts.Add(new AssignedShift { Date = day, Shift = shift });
                             }
-
-                            if (shiftEmployees.Count == 3) break; // Stop after assigning 3 employees
+                            if (shiftEmployees.Count == 3) break;
                         }
 
                         // Record shift in PDF
-                        //gfx.DrawString(day.ToString("dddd"), contentFont, XBrushes.Black,
-                        //    new XRect(dayColumnX, startY, dayColumnWidth, lineHeight), XStringFormats.TopLeft);
                         gfx.DrawString(day.ToString("dddd, MMMM dd, yyyy"), contentFont, XBrushes.Black,
                             new XRect(dayColumnX, startY, dayColumnWidth, lineHeight), XStringFormats.TopLeft);
                         gfx.DrawString($"Shift {shift}", contentFont, XBrushes.Black,
@@ -264,7 +271,7 @@ namespace WpfApp2
                         double employeeStartY = startY; // Start position for employee names
                         foreach (var employee in shiftEmployees)
                         {
-                            gfx.DrawString(employee.FullName, contentFont, XBrushes.Black, new XRect(employeesColumnX, employeeStartY, employeesColumnWidth, lineHeight), XStringFormats.TopLeft);
+                            gfx.DrawString(employee?.FullName ?? "N/A", contentFont, XBrushes.Black, new XRect(employeesColumnX, employeeStartY, employeesColumnWidth, lineHeight), XStringFormats.TopLeft);
                             employeeStartY += lineHeight; // Move down for the next employee
                         }
 
@@ -310,6 +317,121 @@ namespace WpfApp2
                 MessageBox.Show($"Error creating PDF: {ex.Message}");
             }
         }
+
+
+
+        private void DownloadWeeklySchedule_Click2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Initialize the EmployeeService
+                EmployeeService service = new EmployeeService();
+
+                // Calculate week range (Monday to Sunday)
+                DateTime monday = _lastValidDate.AddDays(-6);
+                DateTime sunday = _lastValidDate;
+
+                // Fetch employees and vacations
+                List<Employee> employees = service.GetAllEmployeesPerDepartment(_selectedDepartment); // Replace with your actual service call
+                List<VacationTbl> vacations = service.GetVacationsForWeek(monday, sunday); // Replace with your actual service call
+
+                // Group vacations by date and shift
+                var vacationMap = vacations
+                    .GroupBy(v => new { v.Date, v.Shift })
+                    .ToDictionary(g => g.Key, g => g.Select(v => v.EmployeeId).ToList());
+
+                // Create schedule
+                Dictionary<DateTime, Dictionary<ShiftType, List<Employee>>> weeklySchedule = new Dictionary<DateTime, Dictionary<ShiftType, List<Employee>>>();
+
+                for (DateTime day = monday; day <= sunday; day = day.AddDays(1))
+                {
+                    weeklySchedule[day] = new Dictionary<ShiftType, List<Employee>>();
+
+                    foreach (ShiftType shift in Enum.GetValues(typeof(ShiftType)))
+                    {
+                        // Exclude employees on vacation
+                        var availableEmployees = employees
+                            .Where(emp => !(vacationMap.ContainsKey(new { Date = day, Shift = shift }) &&
+                                            vacationMap[new { Date = day, Shift = shift }].Contains(emp.EmpId)))
+                            .ToList();
+
+                        // Prioritize experienced employees (Level > 3)
+                        int experienceThreshold = 3;
+                        var experiencedEmployees = availableEmployees.Where(emp => emp.EmplLevel > experienceThreshold).ToList();
+
+                        // Fallback to level 2 employees if no experienced employees are available
+                        List<Employee> shiftEmployees = new List<Employee>();
+
+                        if (experiencedEmployees.Any())
+                        {
+                            // Add one experienced employee to the shift
+                            shiftEmployees.Add(experiencedEmployees.First());
+                        }
+                        else
+                        {
+                            // Add one level 2 employee if no experienced employee is available
+                            var level2Employees = availableEmployees.Where(emp => emp.EmplLevel == 2).ToList();
+                            if (level2Employees.Any())
+                            {
+                                shiftEmployees.Add(level2Employees.First());
+                            }
+                        }
+
+                        // Fill remaining slots with other available employees
+                        var remainingSlots = 3 - shiftEmployees.Count;
+                        shiftEmployees.AddRange(availableEmployees.Except(shiftEmployees).Take(remainingSlots));
+
+                        // Ensure the shift has enough employees
+                        if (shiftEmployees.Count < 3)
+                        {
+                            throw new Exception($"Not enough employees available for {shift} on {day:yyyy-MM-dd}");
+                        }
+
+                        weeklySchedule[day][shift] = shiftEmployees;
+                    }
+                }
+
+                // Generate PDF
+                var document = new PdfDocument();
+                var page = document.AddPage();
+                var graphics = XGraphics.FromPdfPage(page);
+                var font = new XFont("Verdana", 12);
+
+                double yPoint = 20;
+                foreach (var day in weeklySchedule.Keys)
+                {
+                    graphics.DrawString($"Schedule for {day:yyyy-MM-dd}", font, XBrushes.Black, new XPoint(20, yPoint));
+                    yPoint += 20;
+
+                    foreach (var shift in weeklySchedule[day].Keys)
+                    {
+                        string employeeNames = string.Join(", ", weeklySchedule[day][shift].Select(emp => emp.FullName));
+                        graphics.DrawString($"{shift}: {employeeNames}", font, XBrushes.Black, new XPoint(40, yPoint));
+                        yPoint += 20;
+                    }
+                    yPoint += 20;
+                }
+
+                // Save the PDF to the Downloads folder
+                string downloadsFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads";
+                string filePath = System.IO.Path.Combine(downloadsFolderPath, $"WeeklySchedule-{monday:yyyy-MM-dd}-{sunday:yyyy-MM-dd}.pdf");
+                document.Save(filePath);
+
+                // Open the file
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error creating PDF: {ex.Message}");
+            }
+        }
+
+
+
 
 
     }
