@@ -184,7 +184,7 @@ namespace WpfApp2
 
                 // Fetch employees for scheduling
                 var allEmployees = service.GetAllEmployeesPerDepartment(_selectedDepartment) ?? new List<Employee>();
-                var experiencedEmployees = allEmployees.Where(emp => emp.EmplLevel == ExperiencedLevel).ToList();
+                var experiencedEmployees = allEmployees.Where(emp => emp.EmpLevel == ExperiencedLevel).ToList();
                 var otherEmployees = allEmployees.Except(experiencedEmployees).ToList();
 
                 // Create a new PDF document
@@ -235,7 +235,7 @@ namespace WpfApp2
 
                         var shiftEmployees = new List<Employee>();
 
-                        var experiencedEmployee = availableEmployees.FirstOrDefault(emp => emp.EmplLevel == ExperiencedLevel);
+                        var experiencedEmployee = availableEmployees.FirstOrDefault(emp => emp.EmpLevel == ExperiencedLevel);
                         if (experiencedEmployee != null)
                         {
                             shiftEmployees.Add(experiencedEmployee);
@@ -357,7 +357,7 @@ namespace WpfApp2
 
                         // Prioritize experienced employees (Level > 3)
                         int experienceThreshold = 3;
-                        var experiencedEmployees = availableEmployees.Where(emp => emp.EmplLevel > experienceThreshold).ToList();
+                        var experiencedEmployees = availableEmployees.Where(emp => emp.EmpLevel > experienceThreshold).ToList();
 
                         // Fallback to level 2 employees if no experienced employees are available
                         List<Employee> shiftEmployees = new List<Employee>();
@@ -370,7 +370,7 @@ namespace WpfApp2
                         else
                         {
                             // Add one level 2 employee if no experienced employee is available
-                            var level2Employees = availableEmployees.Where(emp => emp.EmplLevel == 2).ToList();
+                            var level2Employees = availableEmployees.Where(emp => emp.EmpLevel == 2).ToList();
                             if (level2Employees.Any())
                             {
                                 shiftEmployees.Add(level2Employees.First());

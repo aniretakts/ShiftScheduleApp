@@ -14,7 +14,7 @@ namespace WpfApp2
         public List<Level> GetLevels()
         {
             List<Level> levels = new List<Level>();
-            string query = "SELECT LevelId, LevelName FROM Levels";
+            string query = "SELECT LEVEL_ID, LEVEL_NAME FROM T_LEVEL";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

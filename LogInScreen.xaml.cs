@@ -52,12 +52,12 @@ namespace WpfApp2
             {
                 SqlConnection con = new SqlConnection(@"Data Source=DESKTOP-6542;Initial Catalog=StathmosDb;Integrated Security=True");
                 con.Open();
-                string add_data = "SELECT * FROM [dbo].[User] WHERE username = @username AND password = @password";
+                string add_data = "SELECT COUNT(*) FROM T_USER WHERE Username = @username AND Pwd = @password";
                 SqlCommand cmd = new SqlCommand(add_data, con);
 
                 cmd.Parameters.AddWithValue("@username", username.Text);
                 cmd.Parameters.AddWithValue("@password", password.Password);
-                cmd.ExecuteNonQuery();
+                //cmd.ExecuteNonQuery();
                 int count = Convert.ToInt32(cmd.ExecuteScalar());
 
                 con.Close();

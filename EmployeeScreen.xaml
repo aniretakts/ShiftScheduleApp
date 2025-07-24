@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="EmployeeScreen" Height="550" Width="800"
+        Title="EmployeeScreen" Height="550" Width="1000"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -14,37 +14,37 @@
         MouseDown="Window_MouseDown">
     <Border CornerRadius="50"
             BorderThickness="5">
-            <Border.BorderBrush>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="Orange" Offset="0" />
-                    <GradientStop Color="DarkOrange" Offset="0.75" />
-                    <GradientStop Color="DarkRed" Offset="1" />
-                </LinearGradientBrush>
-            </Border.BorderBrush>
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="Orange" Offset="0" />
+                <GradientStop Color="DarkOrange" Offset="0.75" />
+                <GradientStop Color="DarkRed" Offset="1" />
+            </LinearGradientBrush>
+        </Border.BorderBrush>
 
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="#f2bd80" Offset="0" />
-                    <GradientStop Color="#a87132" Offset="0.75" />
-                    <GradientStop Color="#c96f08" Offset="1" />
-                </LinearGradientBrush>
-            </Border.Background>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                <GradientStop Color="#f2bd80" Offset="0" />
+                <GradientStop Color="#a87132" Offset="0.75" />
+                <GradientStop Color="#c96f08" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
 
-            <Grid Margin="7,5,-7,-5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
+        <Grid Margin="7,5,-7,-5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
 
-                    <Button Content="Menu"
+                <Button Content="Menu"
                         Foreground="White"
                         Background="Transparent"
                         BorderBrush="Transparent"
@@ -54,7 +54,7 @@
                         Margin="138,0,0,0"
                         Click="mainMenu_Click"/>
 
-                    <Button Content="Διαχείρηση Προσωπικού"
+                <Button Content="Διαχείρηση Προσωπικού"
                         Foreground="White"
                         Background="Transparent"
                         BorderBrush="Transparent"
@@ -64,7 +64,7 @@
                         Margin="230,0,0,0"
                         Click="PersonnelManagementButton_Click"/>
 
-                    <Button Content="Δημιουργία Προγράμματος"
+                <Button Content="Δημιουργία Προγράμματος"
                         Foreground="White"
                         Background="Transparent"
                         BorderBrush="Transparent"
@@ -74,7 +74,7 @@
                         Margin="400,0,0,0"
                         Click="CreateSchedule_Click"/>
 
-                    <!--<Button Content="About"
+                <!--<Button Content="About"
                         Foreground="White"
                         Background="Transparent"
                         BorderBrush="Transparent"
@@ -84,7 +84,7 @@
                         Margin="600,0,0,0"
                         Click="AboutButton_Click"/>-->
 
-                    <Button x:Name="btnMinimize"
+                <Button x:Name="btnMinimize"
                         BorderThickness="0"
                         Content="-"
                         Foreground="White"
@@ -92,29 +92,29 @@
                         FontFamily="Arial"
                         Cursor="Hand"
                         Click="btnMinimize_Click" Margin="710,0,0,0">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="DarkGray"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="DarkOrange"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="18" Height="18"
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="DarkGray"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="DarkOrange"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Width="18" Height="18"
                                     CornerRadius="9"
                                     Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
+                                <ContentPresenter VerticalAlignment="Center"
                                                   HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
-                    <Button x:Name="btnClose"
+                <Button x:Name="btnClose"
                         BorderThickness="0"
                         Content="X"
                         Foreground="White"
@@ -123,92 +123,9 @@
                         Cursor="Hand"
                         Click="btnClose_Click" Grid.Column="1">
 
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="DarkGray"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="DarkRed"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Width="18" Height="18"
-                                    CornerRadius="9"
-                                    Background="{TemplateBinding Background}">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                  HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                </Grid>
-
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Orientation="Horizontal" Margin="10">
-                        <!--<TextBox x:Name="FirstNameTextBox" Width="100" Margin="5" PlaceholderText="First Name"/>
-                    <TextBox x:Name="LastNameTextBox" Width="100" Margin="5" PlaceholderText="Last Name"/>
-                    <TextBox x:Name="DepartmentTextBox" Width="100" Margin="5" PlaceholderText="Department"/>
-                    <TextBox x:Name="RoleTextBox" Width="100" Margin="5" PlaceholderText="Role"/>
-                    <Button Content="Add Employee" Margin="5" Click="AddEmployeeButton_Click"/>
-                    <Button Content="Delete Employee" Margin="5" Click="DeleteEmployeeButton_Click"/>-->
-                    </StackPanel>
-
-                    <DataGrid x:Name="EmployeesDataGrid" Grid.Row="1" Margin="10" AutoGenerateColumns="True"
-                  SelectionMode="Single" IsReadOnly="True"/>
-                </Grid>
-                <Label Content="'Ονομα" HorizontalAlignment="Left" Margin="33,46,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
-                <TextBox Name="NewEmpFirstname" HorizontalAlignment="Left" Margin="33,71,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
-                <Label Content="Επίθετο" HorizontalAlignment="Left" Margin="33,89,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
-                <TextBox Name="NewEmpLastname" HorizontalAlignment="Left" Margin="33,115,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
-                <Label Content="Τμήμα" HorizontalAlignment="Left" Margin="33,134,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
-                <ComboBox Name="NewEmpDep" 
-                          HorizontalAlignment="Left" 
-                          Margin="33,157,0,0" 
-                          Grid.Row="1" 
-                          VerticalAlignment="Top" 
-                          Width="220"
-                          DisplayMemberPath="DepName"
-                          SelectedValuePath="DepId"
-                          SelectedValue="{Binding EmpDep, Mode=TwoWay}"/>
-                <Label Content="Ημερομηνία Γέννησης" HorizontalAlignment="Left" Margin="33,180,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
-                <DatePicker Name="NewEmpBirthdate" HorizontalAlignment="Left" Margin="33,206,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
-                <Label Content="Ημέρα έναρξης εργασίας" HorizontalAlignment="Left" Margin="33,235,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
-                <DatePicker Name="NewEmpJoinDate" HorizontalAlignment="Left" Margin="33,261,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
-                <Label Content="Ημερήσιος μισθός" HorizontalAlignment="Left" Margin="33,290,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
-                <TextBox Name="NewEmpSalary" HorizontalAlignment="Left" Margin="33,316,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
-                <Label Content="Επίπεδο Εμπειρίας" HorizontalAlignment="Left" Margin="33,339,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
-                <ComboBox Name="NewEmpLevel" 
-                            HorizontalAlignment="Left" 
-                            Margin="33,365,0,0" 
-                            Grid.Row="1" 
-                            VerticalAlignment="Top" 
-                            Width="220"
-                            DisplayMemberPath="LevelName"
-                            SelectedValuePath="LevelId"
-                            SelectedValue="{Binding EmplLevel, Mode=TwoWay}"/>
-                <Button Content="Add" 
-                    HorizontalAlignment="Left" 
-                    Margin="56,388,0,0" 
-                    Grid.Row="1" 
-                    VerticalAlignment="Top" 
-                    RenderTransformOrigin="0.376,-1.161" 
-                    Height="42" Width="126" 
-                    Click="AddButton_Click">
                     <Button.Style>
                         <Style TargetType="Button">
-                            <!--<Setter Property="TextElement.FontFamily" Value="".>-->
-                            <Setter Property="Background" Value="DarkOrange"/>
-                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Background" Value="DarkGray"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="DarkRed"/>
@@ -216,32 +133,124 @@
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
-
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Width="100" Height="25"
-                                CornerRadius="12"
-                                Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Border Width="18" Height="18"
+                                    CornerRadius="9"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
                             </Border>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-
-
-
-                <DataGrid x:Name="EmpList" AutoGenerateColumns="False" Margin="270,44,24,47" Grid.Row="1" RenderTransformOrigin="0.426,0.49">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding EmpId}" Width="*"/>
-                        <DataGridTextColumn Header="'Ονομα" Binding="{Binding EmpFirstname}" Width="*"/>
-                        <DataGridTextColumn Header="Επίθετο" Binding="{Binding EmpLastname}" Width="*"/>
-                        <DataGridTextColumn Header="Τμήμα" Binding="{Binding EmpDepName}" Width="*"/>
-                        <DataGridTextColumn Header="Ημ. Γεν" Binding="{Binding EmpBirthdate}" Width="*"/>
-                        <DataGridTextColumn Header="Έναρξη εργασίας" Binding="{Binding EmpJoinDate}" Width="*"/>
-                        <DataGridTextColumn Header="Μισθός" Binding="{Binding EmpSalary}" Width="*"/>
-                        <DataGridTextColumn Header="Εμπειρία" Binding="{Binding EmplLevelName}" Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
             </Grid>
-        </Border>
+
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <!--<TextBox x:Name="FirstNameTextBox" Width="100" Margin="5" PlaceholderText="First Name"/>
+                    <TextBox x:Name="LastNameTextBox" Width="100" Margin="5" PlaceholderText="Last Name"/>
+                    <TextBox x:Name="DepartmentTextBox" Width="100" Margin="5" PlaceholderText="Department"/>
+                    <TextBox x:Name="RoleTextBox" Width="100" Margin="5" PlaceholderText="Role"/>
+                    <Button Content="Add Employee" Margin="5" Click="AddEmployeeButton_Click"/>
+                    <Button Content="Delete Employee" Margin="5" Click="DeleteEmployeeButton_Click"/>-->
+                </StackPanel>
+
+                <DataGrid x:Name="EmployeesDataGrid" Grid.Row="1" Margin="10" AutoGenerateColumns="True"
+                  SelectionMode="Single" IsReadOnly="True"/>
+            </Grid>
+            <Label Content="'Ονομα" HorizontalAlignment="Left" Margin="33,7,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <TextBox Name="NewEmpFirstname" HorizontalAlignment="Left" Margin="33,32,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Επίθετο" HorizontalAlignment="Left" Margin="33,50,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <TextBox Name="NewEmpLastname" HorizontalAlignment="Left" Margin="33,76,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Τμήμα" HorizontalAlignment="Left" Margin="33,95,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <ComboBox Name="NewEmpDep" 
+                          HorizontalAlignment="Left" 
+                          Margin="33,118,0,0" 
+                          Grid.Row="1" 
+                          VerticalAlignment="Top" 
+                          Width="220"
+                          DisplayMemberPath="DepName"
+                          SelectedValuePath="DepId"
+                          SelectedValue="{Binding EmpDep, Mode=TwoWay}"/>
+            <Label Content="Ημερομηνία Γέννησης" HorizontalAlignment="Left" Margin="33,141,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <DatePicker Name="NewEmpBirthdate" HorizontalAlignment="Left" Margin="33,172,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Ημέρα έναρξης εργασίας" HorizontalAlignment="Left" Margin="33,196,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <DatePicker Name="NewEmpJoinDate" HorizontalAlignment="Left" Margin="33,228,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Ημερήσιος μισθός" HorizontalAlignment="Left" Margin="33,251,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <TextBox Name="NewEmpSalary" HorizontalAlignment="Left" Margin="33,277,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Επίπεδο Εμπειρίας" HorizontalAlignment="Left" Margin="33,300,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <ComboBox Name="NewEmpLevel" 
+                            HorizontalAlignment="Left" 
+                            Margin="33,326,0,0" 
+                            Grid.Row="1" 
+                            VerticalAlignment="Top" 
+                            Width="220"
+                            DisplayMemberPath="LevelName"
+                            SelectedValuePath="LevelId"
+                            SelectedValue="{Binding EmplLevel, Mode=TwoWay}"/>
+            <Label Content="Ημ. Λήξης Πιστοποιητικού Υγείας" HorizontalAlignment="Left" Margin="33,350,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <DatePicker x:Name="NewEmpHealthCertExpiration" HorizontalAlignment="Left" Margin="33,376,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Ημ. Λήξης Συμβολαίου Εργασίας" HorizontalAlignment="Left" Margin="33,394,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <DatePicker x:Name="NewEmpWorkContractExpiration" HorizontalAlignment="Left" Margin="33,420,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Εργάσιμες Ημέρες ανα Εβδομάδα" HorizontalAlignment="Left" Margin="33,440,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <TextBox x:Name="NewEmpWorkingDaysPerWeek" HorizontalAlignment="Left" Margin="33,466,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <Button Content="Add" 
+                    HorizontalAlignment="Left" 
+                    Margin="250,463,0,0" 
+                    Grid.Row="1" 
+                    VerticalAlignment="Top" 
+                    RenderTransformOrigin="0.376,-1.161" 
+                    Height="42" Width="126" 
+                    Click="AddButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <!--<Setter Property="TextElement.FontFamily" Value="".>-->
+                        <Setter Property="Background" Value="DarkOrange"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100" Height="25"
+                                CornerRadius="12"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+
+            <DataGrid x:Name="EmpList" AutoGenerateColumns="False" Margin="270,44,24,47" Grid.Row="1" RenderTransformOrigin="0.426,0.49">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding EmpId}" Width="10"/>
+                    <DataGridTextColumn Header="'Ονομα" Binding="{Binding EmpFirstname}" Width="*"/>
+                    <DataGridTextColumn Header="Επίθετο" Binding="{Binding EmpLastname}" Width="*"/>
+                    <DataGridTextColumn Header="Τμήμα" Binding="{Binding EmpDepName}" Width="*"/>
+                    <DataGridTextColumn Header="Ημ. Γεν" Binding="{Binding EmpBirthdate}" Width="*"/>
+                    <DataGridTextColumn Header="Έναρξη εργασίας" Binding="{Binding EmpJoinDate}" Width="*"/>
+                    <DataGridTextColumn Header="Μισθός" Binding="{Binding EmpSalary}" Width="*"/>
+                    <DataGridTextColumn Header="Εμπειρία" Binding="{Binding EmpLevel}" Width="*"/>
+                    <DataGridTextColumn Header="Ημ. Λήξης Πιστ. Υγείας" Binding="{Binding EmpHealthCertExpiration}" Width="*"/>
+                    <DataGridTextColumn Header="Ημ. Λήξης Συμβολαίου Εργασίας" Binding="{Binding EmpWorkContractExpiration}" Width="*"/>
+                    <DataGridTextColumn Header="Εργάσιμες μέρες" Binding="{Binding EmpWorkingDaysPerWeek}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
 </Window>

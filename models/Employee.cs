@@ -12,16 +12,20 @@ namespace WpfApp2
         public int EmpId { get; set; }
         public string EmpFirstname { get; set; }
         public string EmpLastname { get; set; }
-        public int EmpDep { get; set; }
         public DateTime EmpBirthdate { get; set; }
         public DateTime EmpJoinDate { get; set; }
         public int EmpSalary { get; set; }
-        public int EmplLevel { get; set; }
+        public int EmpLevel { get; set; }
+        public DateTime EmpHealthCertExpiration { get; set; }
+        public DateTime EmpWorkContractExpiration { get; set; }
+        public int EmpWorkingDaysPerWeek { get; set; }
+        public int DepartmentId { get; set; }  // Foreign key to T_DEPARTMENT
 
 
         // Additional properties for display
+        public int EmpDep { get; set; }
         public string EmpDepName { get; set; }
-        public string EmplLevelName { get; set; }
+        public string EmpLevelName { get; set; }
 
         public string FullName => $"{EmpFirstname} {EmpLastname}";
 

@@ -15,7 +15,7 @@ namespace WpfApp2
         public List<Department> GetDepartments()
         {
             List<Department> departments = new List<Department>();
-            string query = "SELECT DepId, DepName FROM DepartmentTbl";
+            string query = "SELECT DEP_ID, DEP_NAME FROM T_DEPARTMENT";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -40,7 +40,7 @@ namespace WpfApp2
 
         public void AddDepartment(Department department)
         {
-            string query = "INSERT INTO DepartmentTbl (DepName) VALUES (@DepName)";
+            string query = "INSERT INTO T_DEPARTMENT (DEP_NAME) VALUES (@DepName)";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -53,7 +53,7 @@ namespace WpfApp2
 
         public void DeleteDepartment(int departmentId)
         {
-            string query = "DELETE FROM DepartmentTbl WHERE DepId = @DepId";
+            string query = "DELETE FROM T_DEPARTMENT WHERE DEP_ID = @DepId";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

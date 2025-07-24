@@ -85,10 +85,10 @@ namespace WpfApp2
                     employee.EmpDepName = department.DepName;
                 }
 
-                var level = levels.FirstOrDefault(l => l.LevelId == employee.EmplLevel);
+                var level = levels.FirstOrDefault(l => l.LevelId == employee.EmpLevel);
                 if (level != null)
                 {
-                    employee.EmplLevelName = level.LevelName;
+                    employee.EmpLevelName = level.LevelName;
                 }
             }
 
@@ -116,8 +116,11 @@ namespace WpfApp2
             DateTime empJoinDate = NewEmpJoinDate.SelectedDate ?? DateTime.MinValue;
             int empSalary = int.TryParse(NewEmpSalary.Text, out var salary) ? salary : 0;
             int empLevel = (NewEmpLevel.SelectedValue != null) ? (int)NewEmpLevel.SelectedValue : 0;
+            DateTime empHealthCertExpiration = NewEmpHealthCertExpiration.SelectedDate ?? DateTime.MinValue;
+            DateTime empWorkContractExpiration = NewEmpWorkContractExpiration.SelectedDate ?? DateTime.MinValue;
+            int empWorkingDaysPerWeek = int.TryParse(NewEmpWorkingDaysPerWeek.Text, out var days) ? days : 0;
 
-            if (!string.IsNullOrWhiteSpace(empFirstname) && !string.IsNullOrWhiteSpace(empLastname) && empDep > 0 && empBirthdate != DateTime.MinValue && empJoinDate != DateTime.MinValue && empSalary > 0 && empLevel > 0)
+            if (!string.IsNullOrWhiteSpace(empFirstname) && !string.IsNullOrWhiteSpace(empLastname) && empDep > 0 && empBirthdate != DateTime.MinValue && empJoinDate != DateTime.MinValue && empSalary > 0 && empLevel > 0 && empHealthCertExpiration != DateTime.MinValue && empWorkContractExpiration != DateTime.MinValue && empWorkingDaysPerWeek > 0)
             {
                 Employee newEmployee = new Employee
                 {
@@ -127,7 +130,10 @@ namespace WpfApp2
                     EmpBirthdate = empBirthdate,
                     EmpJoinDate = empJoinDate,
                     EmpSalary = empSalary,
-                    EmplLevel = empLevel
+                    EmpLevel = empLevel,
+                    EmpHealthCertExpiration = empHealthCertExpiration,
+                    EmpWorkContractExpiration = empWorkContractExpiration,
+                    EmpWorkingDaysPerWeek = empWorkingDaysPerWeek
                 };
 
                 _employeeService.AddEmployee(newEmployee);
@@ -149,6 +155,9 @@ namespace WpfApp2
             NewEmpJoinDate.SelectedDate = null;
             NewEmpSalary.Text = string.Empty;
             NewEmpLevel.Text = string.Empty;
+            NewEmpHealthCertExpiration.Text = String.Empty;
+            NewEmpWorkContractExpiration.Text = String.Empty;   
+            NewEmpWorkingDaysPerWeek.Text = String.Empty;
         }
     }
 }

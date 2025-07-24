@@ -17,7 +17,26 @@ namespace WpfApp2
         public List<Employee> GetEmployees()
         {
             List<Employee> employees = new List<Employee>();
-            string query = "SELECT EmpId, EmpFirstname, EmpLastname, EmpDep, EmpBirthdate, EmpJoinDate, EmpSalary FROM EmployeeTbl";
+            string query = @"
+                            SELECT 
+                                e.Emp_Id, 
+                                e.Emp_Firstname, 
+                                e.Emp_Lastname, 
+                                e.Emp_Birthdate, 
+                                e.Emp_JoinDate, 
+                                e.Emp_Salary, 
+                                e.Emp_Level, 
+                                e.Emp_health_cert_expiration, 
+                                e.Emp_work_contract_expiration, 
+                                e.Emp_working_days_per_week, 
+                                d.DEP_ID, 
+                                d.DEP_NAME
+                            FROM 
+                                T_EMPLOYEE e
+                            JOIN 
+                                T_EMPLOYEE_DEPARTMENT ed ON e.Emp_Id = ed.Emp_Id
+                            JOIN 
+                                T_DEPARTMENT d ON ed.DEP_ID = d.DEP_ID";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -33,10 +52,15 @@ namespace WpfApp2
                             EmpId = reader.GetInt32(0),
                             EmpFirstname = reader.GetString(1),
                             EmpLastname = reader.GetString(2),
-                            EmpDep = reader.GetInt32(3),
-                            EmpBirthdate = reader.GetDateTime(4),
-                            EmpJoinDate = reader.GetDateTime(5),
-                            EmpSalary = reader.GetInt32(6)
+                            EmpBirthdate = reader.GetDateTime(3),
+                            EmpJoinDate = reader.GetDateTime(4),
+                            EmpSalary = reader.GetInt32(5),
+                            EmpLevel = reader.GetInt32(6),
+                            EmpHealthCertExpiration = reader.GetDateTime(7),
+                            EmpWorkContractExpiration = reader.GetDateTime(8),
+                            EmpWorkingDaysPerWeek = reader.GetInt32(9),
+                            EmpDep = reader.GetInt32(10),
+                            EmpLevelName = reader.GetString(11)
                         });
                     }
                 }
@@ -47,22 +71,72 @@ namespace WpfApp2
 
         public void AddEmployee(Employee employee)
         {
-            string query = "INSERT INTO EmployeeTbl (EmpFirstname, EmpLastname, EmpDep, EmpBirthdate, EmpJoinDate, EmpSalary) VALUES (@EmpFirstname, @EmpLastname, @EmpDep, @EmpBirthdate, @EmpJoinDate, @EmpSalary)";
+            string insertEmployeeQuery = @"
+                                        INSERT INTO T_EMPLOYEE 
+                                        (Emp_Firstname, Emp_Lastname, Emp_Birthdate, Emp_JoinDate, Emp_Salary, Emp_Level, 
+                                         Emp_health_cert_expiration, Emp_work_contract_expiration, Emp_working_days_per_week) 
+                                        VALUES 
+                                        (@EmpFirstname, @EmpLastname, @EmpBirthdate, @EmpJoinDate, @EmpSalary, @EmpLevel, 
+                                         @HealthCertExpiration, @WorkContractExpiration, @WorkingDaysPerWeek);
+                                        SELECT SCOPE_IDENTITY();";  // Get the inserted Emp_Id
+
+            string getDepartmentIdQuery = "SELECT DEP_ID FROM T_DEPARTMENT WHERE DEP_NAME = @DepName";
+
+            string insertDepartmentLinkQuery = @"
+                                        INSERT INTO T_EMPLOYEE_DEPARTMENT (Emp_Id, DEP_ID) 
+                                        VALUES (@EmpId, @DepId);";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@EmpFirstname", employee.EmpFirstname);
-                command.Parameters.AddWithValue("@EmpLastname", employee.EmpLastname);
-                command.Parameters.AddWithValue("@EmpDep", employee.EmpDep);
-                command.Parameters.AddWithValue("@EmpBirthdate", employee.EmpBirthdate);
-                command.Parameters.AddWithValue("@EmpJoinDate", employee.EmpJoinDate);
-                command.Parameters.AddWithValue("@EmpSalary", employee.EmpSalary);
                 connection.Open();
-                command.ExecuteNonQuery();
+
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Insert into T_EMPLOYEE
+                        SqlCommand insertEmpCommand = new SqlCommand(insertEmployeeQuery, connection, transaction);
+                        insertEmpCommand.Parameters.AddWithValue("@EmpFirstname", employee.EmpFirstname);
+                        insertEmpCommand.Parameters.AddWithValue("@EmpLastname", employee.EmpLastname);
+                        insertEmpCommand.Parameters.AddWithValue("@EmpBirthdate", employee.EmpBirthdate);
+                        insertEmpCommand.Parameters.AddWithValue("@EmpJoinDate", employee.EmpJoinDate);
+                        insertEmpCommand.Parameters.AddWithValue("@EmpSalary", employee.EmpSalary);
+                        insertEmpCommand.Parameters.AddWithValue("@EmpLevel", employee.EmpLevel);
+                        insertEmpCommand.Parameters.AddWithValue("@HealthCertExpiration", employee.EmpHealthCertExpiration);
+                        insertEmpCommand.Parameters.AddWithValue("@WorkContractExpiration", employee.EmpWorkContractExpiration);
+                        insertEmpCommand.Parameters.AddWithValue("@WorkingDaysPerWeek", employee.EmpWorkingDaysPerWeek);
+
+                        int insertedEmpId = Convert.ToInt32(insertEmpCommand.ExecuteScalar());
+
+                        // Get department ID
+                        SqlCommand getDepCommand = new SqlCommand(getDepartmentIdQuery, connection, transaction);
+                        getDepCommand.Parameters.AddWithValue("@DepId", employee.EmpDep);
+                        object depIdObj = getDepCommand.ExecuteScalar();
+
+                        if (depIdObj == null)
+                            throw new Exception("Department not found: " + employee.EmpDepName);
+
+                        int depId = Convert.ToInt32(depIdObj);
+
+                        // Insert into T_EMPLOYEE_DEPARTMENT
+                        SqlCommand insertDepCommand = new SqlCommand(insertDepartmentLinkQuery, connection, transaction);
+                        insertDepCommand.Parameters.AddWithValue("@EmpId", insertedEmpId);
+                        insertDepCommand.Parameters.AddWithValue("@DepId", employee.EmpDep);
+                        insertDepCommand.ExecuteNonQuery();
+
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Error while inserting employee and department link: " + ex.Message);
+                    }
+                }
             }
+
         }
 
+        // not used
         public void DeleteEmployee(int empId)
         {
             string query = "DELETE FROM EmployeeTbl WHERE EmpId = @EmpId";
@@ -157,9 +231,21 @@ namespace WpfApp2
         public List<Employee> GetAllEmployeesPerDepartment(int departmentId)
         {
             List<Employee> employees = new List<Employee>();
-            string query = "SELECT EmpId, EmpFirstname, EmpLastname, EmpDep, EmpBirthdate, EmpJoinDate, EmpSalary, EmplLevel " +
-                           "FROM EmployeeTbl " +
-                           "WHERE EmpDep = @DepartmentId";
+            string query = @"
+                            SELECT 
+                                e.Emp_Id, 
+                                e.Emp_Firstname, 
+                                e.Emp_Lastname, 
+                                e.Emp_Birthdate, 
+                                e.Emp_JoinDate, 
+                                e.Emp_Salary, 
+                                e.Emp_Level,
+                                e.Emp_health_cert_expiration,
+                                e.Emp_work_contract_expiration,
+                                e.Emp_working_days_per_week
+                            FROM T_EMPLOYEE e
+                            INNER JOIN T_EMPLOYEE_DEPARTMENT ed ON e.Emp_Id = ed.Emp_Id
+                            WHERE ed.DEP_ID = @DepartmentId;";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -177,11 +263,13 @@ namespace WpfApp2
                             EmpId = reader.GetInt32(0),
                             EmpFirstname = reader.GetString(1),
                             EmpLastname = reader.GetString(2),
-                            EmpDep = reader.GetInt32(3),
-                            EmpBirthdate = reader.GetDateTime(4),
-                            EmpJoinDate = reader.GetDateTime(5),
-                            EmpSalary = reader.GetInt32(6),
-                            EmplLevel = reader.GetInt32(7)
+                            EmpBirthdate = reader.GetDateTime(3),
+                            EmpJoinDate = reader.GetDateTime(4),
+                            EmpSalary = reader.GetInt32(5),
+                            EmpLevel = reader.GetInt32(6),
+                            EmpHealthCertExpiration = reader.GetDateTime(7),
+                            EmpWorkContractExpiration = reader.GetDateTime(8),
+                            EmpWorkingDaysPerWeek = reader.GetInt32(9)
                         });
                     }
                 }
@@ -189,6 +277,7 @@ namespace WpfApp2
 
             return employees;
         }
+
 
     }
 }
