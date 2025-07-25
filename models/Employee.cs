@@ -19,7 +19,7 @@ namespace WpfApp2
         public DateTime EmpHealthCertExpiration { get; set; }
         public DateTime EmpWorkContractExpiration { get; set; }
         public int EmpWorkingDaysPerWeek { get; set; }
-        public int EmpActive { get; set; }
+        public int? EmpActive { get; set; }
         public int DepartmentId { get; set; }  // Foreign key to T_DEPARTMENT
 
 
@@ -28,6 +28,9 @@ namespace WpfApp2
         public string EmpDepName { get; set; }
         public string EmpLevelName { get; set; }
         public string EmpActiveDisplay => EmpActive == 1 ? "Ναι" : "Όχι";  // for display only
+
+        public string EmpWorkContractExpirationDisplay => EmpWorkContractExpiration.Year <= 1901 ? "" : EmpWorkContractExpiration.ToShortDateString();
+        public string EmpHealthCertExpirationDisplay => EmpHealthCertExpiration.Year <= 1901 ? "" : EmpHealthCertExpiration.ToShortDateString();
 
         public string FullName => $"{EmpFirstname} {EmpLastname}";
 

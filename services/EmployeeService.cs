@@ -55,14 +55,14 @@ namespace WpfApp2
                             EmpLastname = reader.GetString(2),
                             EmpBirthdate = reader.GetDateTime(3),
                             EmpJoinDate = reader.GetDateTime(4),
-                            EmpSalary = reader.GetInt32(5),
+                            EmpSalary = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
                             EmpLevel = reader.GetInt32(6),
-                            EmpHealthCertExpiration = reader.GetDateTime(7),
-                            EmpWorkContractExpiration = reader.GetDateTime(8),
+                            EmpHealthCertExpiration = reader.IsDBNull(7) ? DateTime.MinValue : reader.GetDateTime(7),  // nullable
+                            EmpWorkContractExpiration = reader.IsDBNull(8) ? DateTime.MinValue : reader.GetDateTime(8), // nullable
                             EmpWorkingDaysPerWeek = reader.GetInt32(9),
                             EmpDep = reader.GetInt32(10),
                             EmpLevelName = reader.GetString(11),
-                            EmpActive = reader.GetInt32(12)
+                            EmpActive = reader.IsDBNull(12) ? 0 : reader.GetInt32(12)
                         });
                     }
                 }
@@ -137,6 +137,27 @@ namespace WpfApp2
                 }
             }
 
+        }
+
+        public void PauseEmployee(int empId)
+        {
+            string query = @"
+                            UPDATE T_EMPLOYEE
+                            SET 
+                                Emp_work_contract_expiration = '1900-01-01',
+                                Emp_health_cert_expiration = '1900-01-01',
+                                Emp_Salary = 0,
+                                Emp_Active = 0
+                            WHERE Emp_Id = @EmpId";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@EmpId", empId);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
 
         // not used

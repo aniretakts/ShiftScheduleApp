@@ -261,10 +261,19 @@
                     <DataGridTextColumn Header="Έναρξη εργασίας" Binding="{Binding EmpJoinDate}" Width="*"/>
                     <DataGridTextColumn Header="Μισθός" Binding="{Binding EmpSalary}" Width="100"/>
                     <DataGridTextColumn Header="Εμπειρία" Binding="{Binding EmpLevel}" Width="100"/>
-                    <DataGridTextColumn Header="Ημ. Λήξης Πιστ. Υγείας" Binding="{Binding EmpHealthCertExpiration}" Width="*"/>
-                    <DataGridTextColumn Header="Ημ. Λήξης Συμβολαίου Εργασίας" Binding="{Binding EmpWorkContractExpiration}" Width="*"/>
+                    <DataGridTextColumn Header="Ημ. Λήξης Πιστ. Υγείας" Binding="{Binding EmpHealthCertExpirationDisplay}" Width="*"/>
+                    <DataGridTextColumn Header="Ημ. Λήξης Συμβολαίου Εργασίας" Binding="{Binding EmpWorkContractExpirationDisplay }" Width="*"/>
                     <DataGridTextColumn Header="Εργάσιμες μέρες" Binding="{Binding EmpWorkingDaysPerWeek}" Width="100"/>
-                    <DataGridTextColumn Header="Πάυση" Binding="{Binding EmpWorkingDaysPerWeek}" Width="100"/>
+                    <DataGridTemplateColumn Header="Πάυση" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Πάυση" 
+                                        Click="PauseButton_Click" 
+                                        Tag="{Binding EmpId}" 
+                                        Padding="4,2"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

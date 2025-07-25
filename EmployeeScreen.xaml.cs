@@ -148,6 +148,20 @@ namespace WpfApp2
             }
         }
 
+        private void PauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int empId)
+            {
+                var result = MessageBox.Show("Θέλετε σίγουρα να απενεργοποιήσετε τον υπάλληλο;", "Επιβεβαίωση", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    _employeeService.PauseEmployee(empId);
+                    LoadEmployees(); // Refresh the grid
+                }
+            }
+        }
+
         private void ClearForm()
         {
             NewEmpFirstname.Text = string.Empty;
