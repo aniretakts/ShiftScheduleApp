@@ -30,7 +30,8 @@ namespace WpfApp2
                                 e.Emp_work_contract_expiration, 
                                 e.Emp_working_days_per_week, 
                                 d.DEP_ID, 
-                                d.DEP_NAME
+                                d.DEP_NAME,
+                                e.Emp_Active
                             FROM 
                                 T_EMPLOYEE e
                             JOIN 
@@ -60,7 +61,8 @@ namespace WpfApp2
                             EmpWorkContractExpiration = reader.GetDateTime(8),
                             EmpWorkingDaysPerWeek = reader.GetInt32(9),
                             EmpDep = reader.GetInt32(10),
-                            EmpLevelName = reader.GetString(11)
+                            EmpLevelName = reader.GetString(11),
+                            EmpActive = reader.GetInt32(12)
                         });
                     }
                 }
@@ -74,10 +76,10 @@ namespace WpfApp2
             string insertEmployeeQuery = @"
                                         INSERT INTO T_EMPLOYEE 
                                         (Emp_Firstname, Emp_Lastname, Emp_Birthdate, Emp_JoinDate, Emp_Salary, Emp_Level, 
-                                         Emp_health_cert_expiration, Emp_work_contract_expiration, Emp_working_days_per_week) 
+                                         Emp_health_cert_expiration, Emp_work_contract_expiration, Emp_working_days_per_week, Emp_Active) 
                                         VALUES 
                                         (@EmpFirstname, @EmpLastname, @EmpBirthdate, @EmpJoinDate, @EmpSalary, @EmpLevel, 
-                                         @HealthCertExpiration, @WorkContractExpiration, @WorkingDaysPerWeek);
+                                         @HealthCertExpiration, @WorkContractExpiration, @WorkingDaysPerWeek, @EmpActive );
                                         SELECT SCOPE_IDENTITY();";  // Get the inserted Emp_Id
 
             string getDepartmentIdQuery = "SELECT DEP_ID FROM T_DEPARTMENT WHERE DEP_NAME = @DepName";
@@ -105,6 +107,7 @@ namespace WpfApp2
                         insertEmpCommand.Parameters.AddWithValue("@HealthCertExpiration", employee.EmpHealthCertExpiration);
                         insertEmpCommand.Parameters.AddWithValue("@WorkContractExpiration", employee.EmpWorkContractExpiration);
                         insertEmpCommand.Parameters.AddWithValue("@WorkingDaysPerWeek", employee.EmpWorkingDaysPerWeek);
+                        insertEmpCommand.Parameters.AddWithValue("@EmpActive", employee.EmpActive);
 
                         int insertedEmpId = Convert.ToInt32(insertEmpCommand.ExecuteScalar());
 
@@ -242,7 +245,8 @@ namespace WpfApp2
                                 e.Emp_Level,
                                 e.Emp_health_cert_expiration,
                                 e.Emp_work_contract_expiration,
-                                e.Emp_working_days_per_week
+                                e.Emp_working_days_per_week,
+                                e.Emp_Active
                             FROM T_EMPLOYEE e
                             INNER JOIN T_EMPLOYEE_DEPARTMENT ed ON e.Emp_Id = ed.Emp_Id
                             WHERE ed.DEP_ID = @DepartmentId;";
@@ -269,7 +273,8 @@ namespace WpfApp2
                             EmpLevel = reader.GetInt32(6),
                             EmpHealthCertExpiration = reader.GetDateTime(7),
                             EmpWorkContractExpiration = reader.GetDateTime(8),
-                            EmpWorkingDaysPerWeek = reader.GetInt32(9)
+                            EmpWorkingDaysPerWeek = reader.GetInt32(9),
+                            EmpActive = reader.GetInt32(10)
                         });
                     }
                 }

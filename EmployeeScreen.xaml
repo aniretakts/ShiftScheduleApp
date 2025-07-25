@@ -202,12 +202,22 @@
             <DatePicker x:Name="NewEmpWorkContractExpiration" HorizontalAlignment="Left" Margin="33,645,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
             <Label Content="Εργάσιμες Ημέρες ανα Εβδομάδα" HorizontalAlignment="Left" Margin="33,692,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
             <TextBox x:Name="NewEmpWorkingDaysPerWeek" HorizontalAlignment="Left" Margin="33,718,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <CheckBox x:Name="NewEmpActive"
+                      Content="Ενεργός Υπάλληλος"
+                      HorizontalAlignment="Left"
+                      Margin="33,763,0,0"
+                      Grid.Row="1"
+                      VerticalAlignment="Top"
+                      Width="220"
+                      Foreground="White"
+                      FontWeight="Medium"
+                      FontSize="14"/>
             <Button Content="Προσθήκη" 
                     HorizontalAlignment="Left" 
                     Foreground="White"
                     FontSize="20"
                     FontWeight="Medium"
-                    Margin="0,790,0,0" 
+                    Margin="-5,857,0,0" 
                     Grid.Row="1" 
                     VerticalAlignment="Top" 
                     RenderTransformOrigin="0.376,-1.161" 
@@ -241,17 +251,20 @@
 
             <DataGrid x:Name="EmpList" AutoGenerateColumns="False" Margin="270,44,24,47" Grid.Row="1" RenderTransformOrigin="0.426,0.49">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding EmpId}" Width="10"/>
-                    <DataGridTextColumn Header="'Ονομα" Binding="{Binding EmpFirstname}" Width="*"/>
-                    <DataGridTextColumn Header="Επίθετο" Binding="{Binding EmpLastname}" Width="*"/>
-                    <DataGridTextColumn Header="Τμήμα" Binding="{Binding EmpDepName}" Width="*"/>
-                    <DataGridTextColumn Header="Ημ. Γεν" Binding="{Binding EmpBirthdate}" Width="*"/>
+                    <DataGridTextColumn Header="ID" Binding="{Binding EmpId}" Width="30"/>
+                    <DataGridTextColumn Header="Επεξεργασία" Binding="{Binding EmpWorkingDaysPerWeek}" Width="100"/>
+                    <DataGridTextColumn Header="Ενεργός" Binding="{Binding EmpActiveDisplay}" Width="100"/>
+                    <DataGridTextColumn Header="'Ονομα" Binding="{Binding EmpFirstname}" Width="150"/>
+                    <DataGridTextColumn Header="Επίθετο" Binding="{Binding EmpLastname}" Width="150"/>
+                    <DataGridTextColumn Header="Τμήμα" Binding="{Binding EmpDepName}" Width="150"/>
+                    <DataGridTextColumn Header="Ημ. Γεν" Binding="{Binding EmpBirthdate}" Width="100"/>
                     <DataGridTextColumn Header="Έναρξη εργασίας" Binding="{Binding EmpJoinDate}" Width="*"/>
-                    <DataGridTextColumn Header="Μισθός" Binding="{Binding EmpSalary}" Width="*"/>
-                    <DataGridTextColumn Header="Εμπειρία" Binding="{Binding EmpLevel}" Width="*"/>
+                    <DataGridTextColumn Header="Μισθός" Binding="{Binding EmpSalary}" Width="100"/>
+                    <DataGridTextColumn Header="Εμπειρία" Binding="{Binding EmpLevel}" Width="100"/>
                     <DataGridTextColumn Header="Ημ. Λήξης Πιστ. Υγείας" Binding="{Binding EmpHealthCertExpiration}" Width="*"/>
                     <DataGridTextColumn Header="Ημ. Λήξης Συμβολαίου Εργασίας" Binding="{Binding EmpWorkContractExpiration}" Width="*"/>
-                    <DataGridTextColumn Header="Εργάσιμες μέρες" Binding="{Binding EmpWorkingDaysPerWeek}" Width="*"/>
+                    <DataGridTextColumn Header="Εργάσιμες μέρες" Binding="{Binding EmpWorkingDaysPerWeek}" Width="100"/>
+                    <DataGridTextColumn Header="Πάυση" Binding="{Binding EmpWorkingDaysPerWeek}" Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

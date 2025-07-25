@@ -119,6 +119,7 @@ namespace WpfApp2
             DateTime empHealthCertExpiration = NewEmpHealthCertExpiration.SelectedDate ?? DateTime.MinValue;
             DateTime empWorkContractExpiration = NewEmpWorkContractExpiration.SelectedDate ?? DateTime.MinValue;
             int empWorkingDaysPerWeek = int.TryParse(NewEmpWorkingDaysPerWeek.Text, out var days) ? days : 0;
+            int empActive = NewEmpActive.IsChecked == true ? 1 : 0;
 
             if (!string.IsNullOrWhiteSpace(empFirstname) && !string.IsNullOrWhiteSpace(empLastname) && empDep > 0 && empBirthdate != DateTime.MinValue && empJoinDate != DateTime.MinValue && empSalary > 0 && empLevel > 0 && empHealthCertExpiration != DateTime.MinValue && empWorkContractExpiration != DateTime.MinValue && empWorkingDaysPerWeek > 0)
             {
@@ -133,7 +134,8 @@ namespace WpfApp2
                     EmpLevel = empLevel,
                     EmpHealthCertExpiration = empHealthCertExpiration,
                     EmpWorkContractExpiration = empWorkContractExpiration,
-                    EmpWorkingDaysPerWeek = empWorkingDaysPerWeek
+                    EmpWorkingDaysPerWeek = empWorkingDaysPerWeek,
+                    EmpActive = empActive
                 };
 
                 _employeeService.AddEmployee(newEmployee);
