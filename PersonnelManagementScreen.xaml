@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="PersonnelManagementScreen" Height="550" Width="800"
+        Title="PersonnelManagementScreen" Height="1080" Width="1920"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -92,7 +92,7 @@
                         FontSize="16"
                         FontFamily="Arial"
                         Cursor="Hand"
-                        Click="btnMinimize_Click" Margin="710,0,0,0" HorizontalAlignment="Left" Width="25">
+                        Click="btnMinimize_Click" Margin="1800,0,0,0" HorizontalAlignment="Left" Width="25">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="DarkGray"/>
@@ -149,11 +149,11 @@
 
 
             <Image HorizontalAlignment="Left" 
-                   Height="141" 
-                   Margin="118,112,0,0" 
+                   Height="172" 
+                   Margin="745,181,0,0" 
                    Grid.Row="1" 
                    VerticalAlignment="Top" 
-                   Width="194"
+                   Width="243"
                    Source="/Images/Logo.png"/>
             <TextBlock Text="Διαχείρηση Προσωπικού"
                            Foreground="White"
@@ -168,35 +168,26 @@
                        FontSize="20"
                        FontWeight="Medium"
                        VerticalAlignment="Top"
-                       Margin="80,291,463,0" Grid.Row="1" Height="164"/>   
-            <Button Content="Προσθήκη/Προβολή Υπαλλήλων" 
+                       Margin="625,384,837,0" Grid.Row="1" Height="46"/>
+            <Button Content="Υπάλληλοι" 
                     Foreground="White"
                     HorizontalAlignment="Left" 
-                    Margin="480,150,0,0" 
+                    Margin="728,489,0,0" 
                     Grid.Row="1" 
                     VerticalAlignment="Top" Width="249" Height="46" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14"
-                    Click="AddEmployeeButton_Click" RenderTransformOrigin="0.5,0.5">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="-2.616"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="-0.594"/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
+                    Click="AddEmployeeButton_Click"/>
             <Button Content="Επεξεργασία Υπαλλήλου" 
                     Foreground="White"
                     HorizontalAlignment="Left" 
-                    Margin="498,278,0,0" 
+                    Margin="728,613,0,0" 
                     Grid.Row="1" 
-                    VerticalAlignment="Top" Width="199" Height="26" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14"/>
+                    VerticalAlignment="Top" Width="249" Height="46" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14" RenderTransformOrigin="1.105,0.736"/>
             <Button Content="Τμήματα" 
                     Foreground="White"
                     HorizontalAlignment="Left" 
-                    Margin="498,320,0,0" 
+                    Margin="728,554,0,0" 
                     Grid.Row="1" 
-                    VerticalAlignment="Top" Width="199" Height="26" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14"
+                    VerticalAlignment="Top" Width="249" Height="46" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14"
                     Click="Department_Click"/>
 
 

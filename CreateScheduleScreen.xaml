@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="CreateScheduleScreen" Height="550" Width="800"
+        Title="CreateScheduleScreen" Height="1080" Width="1920"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -92,7 +92,7 @@
                         FontSize="16"
                         FontFamily="Arial"
                         Cursor="Hand"
-                        Click="btnMinimize_Click" Margin="710,0,0,0">
+                        Click="btnMinimize_Click" Margin="1800,0,0,0">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="DarkGray"/>
@@ -168,12 +168,15 @@
 
             <Button Content="Ξεκινήστε" 
                     Name="StartButton"
+                    Foreground="White"
+                    FontSize="20"
+                    FontWeight="Medium"
                     HorizontalAlignment="Left" 
-                    Margin="583,418,0,0" 
+                    Margin="38,178,0,0" 
                     Grid.Row="1" 
                     VerticalAlignment="Top" 
                     RenderTransformOrigin="0.376,-1.161" 
-                    Height="42" Width="126" 
+                    Height="40" Width="310" 
                     Click="StartButton_Click"
                     IsEnabled="False" >
                 <Button.Style>
@@ -191,7 +194,7 @@
 
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Width="100" Height="25"
+                        <Border Width="200" Height="40"
                                 CornerRadius="12"
                                 Background="{TemplateBinding Background}">
                             <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>

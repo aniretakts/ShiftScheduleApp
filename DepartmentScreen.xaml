@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="DepartmentScreen" Height="550" Width="800"
+        Title="DepartmentScreen" Height="1080" Width="1920"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -92,7 +92,7 @@
                         FontSize="16"
                         FontFamily="Arial"
                         Cursor="Hand"
-                        Click="btnMinimize_Click" Margin="710,0,0,0">
+                        Click="btnMinimize_Click" Margin="1800,0,0,0">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="DarkGray"/>
@@ -156,13 +156,16 @@
                        FontSize="15"
                        VerticalAlignment="Top" Width="259"/>
             <TextBox Name="NewDepartmentName" HorizontalAlignment="Left" Margin="30,136,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="241" Height="27"/>
-            <Button Content="Add" 
+            <Button Content="Προσθήκη" 
                     HorizontalAlignment="Left" 
+                    Foreground="White"
+                    FontSize="20"
+                    FontWeight="Medium"
                     Margin="24,178,0,0" 
                     Grid.Row="1" 
                     VerticalAlignment="Top" 
                     RenderTransformOrigin="0.376,-1.161" 
-                    Height="42" Width="126" 
+                    Height="42" Width="273" 
                     Click="AddButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -179,7 +182,7 @@
 
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Width="100" Height="25"
+                        <Border Width="200" Height="40"
                                 CornerRadius="12"
                                 Background="{TemplateBinding Background}">
                             <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
