@@ -82,8 +82,6 @@ namespace WpfApp2
                                          @HealthCertExpiration, @WorkContractExpiration, @WorkingDaysPerWeek, @EmpActive );
                                         SELECT SCOPE_IDENTITY();";  // Get the inserted Emp_Id
 
-            string getDepartmentIdQuery = "SELECT DEP_ID FROM T_DEPARTMENT WHERE DEP_NAME = @DepName";
-
             string insertDepartmentLinkQuery = @"
                                         INSERT INTO T_EMPLOYEE_DEPARTMENT (Emp_Id, DEP_ID) 
                                         VALUES (@EmpId, @DepId);";
@@ -110,16 +108,6 @@ namespace WpfApp2
                         insertEmpCommand.Parameters.AddWithValue("@EmpActive", employee.EmpActive);
 
                         int insertedEmpId = Convert.ToInt32(insertEmpCommand.ExecuteScalar());
-
-                        // Get department ID
-                        SqlCommand getDepCommand = new SqlCommand(getDepartmentIdQuery, connection, transaction);
-                        getDepCommand.Parameters.AddWithValue("@DepId", employee.EmpDep);
-                        object depIdObj = getDepCommand.ExecuteScalar();
-
-                        if (depIdObj == null)
-                            throw new Exception("Department not found: " + employee.EmpDepName);
-
-                        int depId = Convert.ToInt32(depIdObj);
 
                         // Insert into T_EMPLOYEE_DEPARTMENT
                         SqlCommand insertDepCommand = new SqlCommand(insertDepartmentLinkQuery, connection, transaction);
