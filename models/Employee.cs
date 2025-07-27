@@ -29,6 +29,12 @@ namespace WpfApp2
         public string EmpLevelName { get; set; }
         public string EmpActiveDisplay => EmpActive == 1 ? "Ναι" : "Όχι";  // for display only
 
+        public bool IsActiveBool
+        {
+            get => EmpActive == 1;
+            set => EmpActive = value ? 1 : 0;
+        }
+
         public string EmpWorkContractExpirationDisplay => EmpWorkContractExpiration.Year <= 1901 ? "" : EmpWorkContractExpiration.ToShortDateString();
         public string EmpHealthCertExpirationDisplay => EmpHealthCertExpiration.Year <= 1901 ? "" : EmpHealthCertExpiration.ToShortDateString();
 

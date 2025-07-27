@@ -145,6 +145,9 @@
       <DependentUpon>CreateScheduleScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="DateRange.cs" />
+    <Compile Include="EditEmployeeWindow.xaml.cs">
+      <DependentUpon>EditEmployeeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="models\Department.cs" />
     <Compile Include="DepartmentScreen.xaml.cs">
       <DependentUpon>DepartmentScreen.xaml</DependentUpon>
@@ -190,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DownloadWeeklyScheduleScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditEmployeeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

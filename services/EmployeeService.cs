@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
+using System.Windows;
+using System.Windows.Shell;
 
 namespace WpfApp2
 {
@@ -148,15 +150,43 @@ namespace WpfApp2
             }
         }
 
-        // not used
-        public void DeleteEmployee(int empId)
+        public void UpdateEmployee(Employee employee)
         {
-            string query = "DELETE FROM EmployeeTbl WHERE EmpId = @EmpId";
+            string updateQuery = @"
+                                 UPDATE T_EMPLOYEE
+                                 SET 
+                                     Emp_Firstname = @EmpFirstname,
+                                     Emp_Lastname = @EmpLastname,
+                                     Emp_Birthdate = @EmpBirthdate,
+                                     Emp_JoinDate = @EmpJoinDate,
+                                     Emp_Salary = @EmpSalary,
+                                     Emp_Level = @EmpLevel,
+                                     Emp_health_cert_expiration = @HealthCertExpiration,
+                                     Emp_work_contract_expiration = @WorkContractExpiration,
+                                     Emp_working_days_per_week = @WorkingDaysPerWeek,
+                                     Emp_Active = @EmpActive
+                                 WHERE Emp_Id = @EmpId;
+
+                                 UPDATE T_EMPLOYEE_DEPARTMENT
+                                 SET DEP_ID = @DepId
+                                 WHERE Emp_Id = @EmpId;";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@EmpId", empId);
+                SqlCommand command = new SqlCommand(updateQuery, connection);
+                command.Parameters.AddWithValue("@EmpFirstname", employee.EmpFirstname);
+                command.Parameters.AddWithValue("@EmpLastname", employee.EmpLastname);
+                command.Parameters.AddWithValue("@EmpBirthdate", employee.EmpBirthdate);
+                command.Parameters.AddWithValue("@EmpJoinDate", employee.EmpJoinDate);
+                command.Parameters.AddWithValue("@EmpSalary", employee.EmpSalary);
+                command.Parameters.AddWithValue("@EmpLevel", employee.EmpLevel);
+                command.Parameters.AddWithValue("@HealthCertExpiration", employee.EmpHealthCertExpiration);
+                command.Parameters.AddWithValue("@WorkContractExpiration", employee.EmpWorkContractExpiration);
+                command.Parameters.AddWithValue("@WorkingDaysPerWeek", employee.EmpWorkingDaysPerWeek);
+                command.Parameters.AddWithValue("@EmpActive", employee.EmpActive);
+                command.Parameters.AddWithValue("@DepId", employee.EmpDep);
+                command.Parameters.AddWithValue("@EmpId", employee.EmpId);
+
                 connection.Open();
                 command.ExecuteNonQuery();
             }

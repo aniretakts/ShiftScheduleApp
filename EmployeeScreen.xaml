@@ -252,7 +252,16 @@
             <DataGrid x:Name="EmpList" AutoGenerateColumns="False" Margin="270,44,24,47" Grid.Row="1" RenderTransformOrigin="0.426,0.49">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding EmpId}" Width="30"/>
-                    <DataGridTextColumn Header="Επεξεργασία" Binding="{Binding EmpWorkingDaysPerWeek}" Width="100"/>
+                    <DataGridTemplateColumn Header="Επεξεργασία" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Επεξεργασία" 
+                                        Tag="{Binding}" 
+                                        Click="EditButton_Click"
+                                        Padding="4,2"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Ενεργός" Binding="{Binding EmpActiveDisplay}" Width="100"/>
                     <DataGridTextColumn Header="'Ονομα" Binding="{Binding EmpFirstname}" Width="150"/>
                     <DataGridTextColumn Header="Επίθετο" Binding="{Binding EmpLastname}" Width="150"/>
@@ -264,7 +273,8 @@
                     <DataGridTextColumn Header="Ημ. Λήξης Πιστ. Υγείας" Binding="{Binding EmpHealthCertExpirationDisplay}" Width="*"/>
                     <DataGridTextColumn Header="Ημ. Λήξης Συμβολαίου Εργασίας" Binding="{Binding EmpWorkContractExpirationDisplay }" Width="*"/>
                     <DataGridTextColumn Header="Εργάσιμες μέρες" Binding="{Binding EmpWorkingDaysPerWeek}" Width="100"/>
-                    <DataGridTemplateColumn Header="Πάυση" Width="100">
+                    <!--not needed, covered by the edit functionality-->
+                    <!--<DataGridTemplateColumn Header="Πάυση" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="Πάυση" 
@@ -273,7 +283,7 @@
                                         Padding="4,2"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    </DataGridTemplateColumn>-->
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

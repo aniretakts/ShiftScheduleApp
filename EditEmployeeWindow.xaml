@@ -1,0 +1,149 @@
+﻿<Window x:Class="WpfApp2.EditEmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="EditEmployeeWindow" Height="1000" Width="323"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Border CornerRadius="50"
+            BorderThickness="5">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="Orange" Offset="0" />
+                <GradientStop Color="DarkOrange" Offset="0.75" />
+                <GradientStop Color="DarkRed" Offset="1" />
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                <GradientStop Color="#f2bd80" Offset="0" />
+                <GradientStop Color="#a87132" Offset="0.75" />
+                <GradientStop Color="#c96f08" Offset="1" />
+            </LinearGradientBrush>
+        </Border.Background>
+
+        <Grid Margin="10,-62,10,-79">
+
+            <Label Content="'Ονομα" HorizontalAlignment="Left" Margin="33,89,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <TextBox Text="{Binding EditableEmployee.EmpFirstname, Mode=TwoWay}" HorizontalAlignment="Left" Margin="33,114,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Επίθετο" HorizontalAlignment="Left" Margin="33,145,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <TextBox Text="{Binding EditableEmployee.EmpLastname, Mode=TwoWay}" HorizontalAlignment="Left" Margin="33,171,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Τμήμα" HorizontalAlignment="Left" Margin="33,209,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <ComboBox ItemsSource="{Binding Departments}" 
+                        DisplayMemberPath="DepName"
+                        SelectedValuePath="DepId"
+                        SelectedValue="{Binding EditableEmployee.EmpDep, Mode=TwoWay}"
+                        HorizontalAlignment="Left" 
+                        Margin="33,232,0,0" 
+                        Grid.Row="1" 
+                        VerticalAlignment="Top" 
+                        Width="220"/>
+            <Label Content="Ημερομηνία Γέννησης" HorizontalAlignment="Left" Margin="33,272,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <DatePicker SelectedDate="{Binding EditableEmployee.EmpBirthdate, Mode=TwoWay}" HorizontalAlignment="Left" Margin="33,303,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Ημέρα έναρξης εργασίας" HorizontalAlignment="Left" Margin="33,344,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <DatePicker SelectedDate="{Binding EditableEmployee.EmpJoinDate, Mode=TwoWay}" HorizontalAlignment="Left" Margin="33,376,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Ημερήσιος μισθός" HorizontalAlignment="Left" Margin="33,418,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <TextBox Text="{Binding EditableEmployee.EmpSalary, Mode=TwoWay}" HorizontalAlignment="Left" Margin="33,444,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Επίπεδο Εμπειρίας" HorizontalAlignment="Left" Margin="33,479,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <ComboBox ItemsSource="{Binding Levels}" 
+                        DisplayMemberPath="LevelName"
+                        SelectedValuePath="LevelId"
+                        SelectedValue="{Binding EditableEmployee.EmpLevel, Mode=TwoWay}" 
+                        HorizontalAlignment="Left" 
+                        Margin="33,505,0,0" 
+                        Grid.Row="1" 
+                        VerticalAlignment="Top" 
+                        Width="220"/>
+            <Label Content="Ημ. Λήξης Πιστοποιητικού Υγείας" HorizontalAlignment="Left" Margin="33,544,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <DatePicker SelectedDate="{Binding EditableEmployee.EmpHealthCertExpiration, Mode=TwoWay}" HorizontalAlignment="Left" Margin="33,570,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Ημ. Λήξης Συμβολαίου Εργασίας" HorizontalAlignment="Left" Margin="33,619,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <DatePicker SelectedDate="{Binding EditableEmployee.EmpWorkContractExpiration, Mode=TwoWay}" HorizontalAlignment="Left" Margin="33,645,0,0" Grid.Row="1" VerticalAlignment="Top" Width="220"/>
+            <Label Content="Εργάσιμες Ημέρες ανα Εβδομάδα" HorizontalAlignment="Left" Margin="33,692,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <TextBox Text="{Binding EditableEmployee.EmpWorkingDaysPerWeek, Mode=TwoWay}" HorizontalAlignment="Left" Margin="33,718,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
+            <CheckBox Content="Ενεργός Υπάλληλος"
+                      IsChecked="{Binding EditableEmployee.IsActiveBool, Mode=TwoWay}"
+                      HorizontalAlignment="Left"
+                      Margin="33,763,0,0"
+                      Grid.Row="1"
+                      VerticalAlignment="Top"
+                      Width="220"
+                      Foreground="White"
+                      FontWeight="Medium"
+                      FontSize="14"/>
+            <Button Content="Αποθήκευση" 
+                    HorizontalAlignment="Center" 
+                    Foreground="White"
+                    FontSize="20"
+                    FontWeight="Medium"
+                    Margin="0,857,0,0" 
+                    VerticalAlignment="Top" 
+                    RenderTransformOrigin="0.376,-1.161" 
+                    Height="42" Width="270" 
+                    Click="SaveButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <!--<Setter Property="TextElement.FontFamily" Value="".>-->
+                        <Setter Property="Background" Value="DarkOrange"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="200" Height="40"
+                                CornerRadius="12"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Content="Ακύρωση" 
+                    HorizontalAlignment="Center" 
+                    Foreground="White"
+                    FontSize="20"
+                    FontWeight="Medium"
+                    Margin="0,929,0,0" 
+                    VerticalAlignment="Top" 
+                    RenderTransformOrigin="0.376,-1.161" 
+                    Height="42" Width="270" 
+                    Click="CancelButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <!--<Setter Property="TextElement.FontFamily" Value="".>-->
+                        <Setter Property="Background" Value="DarkOrange"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="200" Height="40"
+                                CornerRadius="12"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+    </Border>
+</Window>

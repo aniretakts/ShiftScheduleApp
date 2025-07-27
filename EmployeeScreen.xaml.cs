@@ -162,6 +162,20 @@ namespace WpfApp2
             }
         }
 
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button?.Tag is Employee empToEdit)
+            {
+                var editWindow = new EditEmployeeWindow(empToEdit);
+                if (editWindow.ShowDialog() == true)
+                {
+                    // Reload DataGrid
+                    LoadEmployees();
+                }
+            }
+        }
+
         private void ClearForm()
         {
             NewEmpFirstname.Text = string.Empty;
