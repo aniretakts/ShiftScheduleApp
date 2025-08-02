@@ -23,8 +23,9 @@ namespace WpfApp2
         private readonly EmployeeService _employeeService;
         private readonly DepartmentService _departmentService;
         private readonly LevelService _levelService;
-        private List<Employee> _allEmployees;
         private bool _filterActiveOnly = false;
+        private int? _selectedDepartmentId = null;
+
 
 
         public EmployeeScreen()
@@ -105,6 +106,13 @@ namespace WpfApp2
         {
             List<Department> departments = _departmentService.GetDepartments();
             NewEmpDep.ItemsSource = departments;
+
+            // Add an "All" option to ComboBox
+            var allOption = new Department { DepId = -1, DepName = "Όλα τα Τμήματα" };
+            departments.Insert(0, allOption);
+
+            DepartmentFilterComboBox.ItemsSource = departments;
+            DepartmentFilterComboBox.SelectedIndex = 0;
         }
 
         private void LoadLevels()
@@ -186,7 +194,10 @@ namespace WpfApp2
         {
             if (item is Employee emp)
             {
-                return !_filterActiveOnly || emp.EmpActiveDisplay == "Ναι"; // Adjust if your "active" value is different
+                bool isActiveMatch = !_filterActiveOnly || emp.EmpActiveDisplay == "Ναι";
+                bool isDepartmentMatch = !_selectedDepartmentId.HasValue || emp.EmpDep == _selectedDepartmentId.Value;
+
+                return isActiveMatch && isDepartmentMatch;
             }
             return true;
         }
@@ -197,6 +208,16 @@ namespace WpfApp2
             CollectionViewSource.GetDefaultView(EmpList.ItemsSource).Refresh();
             ToggleFilterButton.Content = _filterActiveOnly ? "Εμφάνιση όλων" : "Εμφάνιση μόνο ενεργών";
         }
+
+        private void DepartmentFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DepartmentFilterComboBox.SelectedItem is Department selected)
+            {
+                _selectedDepartmentId = selected.DepId == -1 ? (int?)null : (int?)selected.DepId;
+                CollectionViewSource.GetDefaultView(EmpList.ItemsSource).Refresh();
+            }
+        }
+
 
         private void ClearForm()
         {

@@ -225,6 +225,12 @@
                 </Button.Template>
             </Button>
 
+            <!-- Department Filter ComboBox -->
+            <ComboBox x:Name="DepartmentFilterComboBox"
+                      DisplayMemberPath="DepName"
+                      SelectedValuePath="DepId"
+                      SelectionChanged="DepartmentFilterComboBox_SelectionChanged" 
+                      Margin="610,48,1130,962" Grid.Row="1"/>
 
 
             <Label Content="Φίλτρα:" HorizontalAlignment="Left" Margin="283,50,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
