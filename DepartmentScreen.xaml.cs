@@ -24,10 +24,13 @@ namespace WpfApp2
     public partial class DepartmentScreen : Window
     {
         private readonly DepartmentService _departmentService;
+        private readonly EmployeeService _employeeService;
+
         public DepartmentScreen()
         {
             InitializeComponent();
             _departmentService = new DepartmentService();
+            _employeeService = new EmployeeService();
             LoadData();
         }
 
@@ -86,10 +89,12 @@ namespace WpfApp2
 
                 _departmentService.AddDepartment(newDepartment);
                 LoadData(); // Refresh the DataGrid
+
+                NewDepartmentName.Text = string.Empty;
             }
             else
             {
-                MessageBox.Show("Please enter a valid department name.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Παρακαλώ εισάγετε ένα έγκυρο όνομα τμήματος.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -102,7 +107,24 @@ namespace WpfApp2
         {
             if (sender is Button button && button.CommandParameter is int departmentId)
             {
-                MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this department?", "Delete Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                // Check for employees linked to this department
+                var employeesInDepartment = _employeeService.GetEmployees()
+                                                            .Where(emp => emp.EmpDep == departmentId)
+                                                            .ToList();
+
+                if (employeesInDepartment.Any())
+                {
+                    MessageBox.Show("Αυτό το τμήμα δεν μπορεί να διαγραφεί επειδή υπάρχουν υπάλληλοι που έχουν αντιστοιχιστεί σε αυτό.",
+                                    "Deletion Blocked",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                    return;
+                }
+
+                MessageBoxResult result = MessageBox.Show("Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το τμήμα;",
+                                                          "Επιβεβαίωση Διαγραφής",
+                                                          MessageBoxButton.YesNo,
+                                                          MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -110,8 +132,8 @@ namespace WpfApp2
                     LoadData(); // Refresh the DataGrid
                 }
             }
-
         }
+
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
