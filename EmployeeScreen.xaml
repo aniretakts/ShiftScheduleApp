@@ -145,27 +145,6 @@
                     </Button.Template>
                 </Button>
             </Grid>
-
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <!--<TextBox x:Name="FirstNameTextBox" Width="100" Margin="5" PlaceholderText="First Name"/>
-                    <TextBox x:Name="LastNameTextBox" Width="100" Margin="5" PlaceholderText="Last Name"/>
-                    <TextBox x:Name="DepartmentTextBox" Width="100" Margin="5" PlaceholderText="Department"/>
-                    <TextBox x:Name="RoleTextBox" Width="100" Margin="5" PlaceholderText="Role"/>
-                    <Button Content="Add Employee" Margin="5" Click="AddEmployeeButton_Click"/>
-                    <Button Content="Delete Employee" Margin="5" Click="DeleteEmployeeButton_Click"/>-->
-                </StackPanel>
-
-                <DataGrid x:Name="EmployeesDataGrid" Grid.Row="1" Margin="10" AutoGenerateColumns="True"
-                  SelectionMode="Single" IsReadOnly="True"/>
-            </Grid>
             <Label Content="'Ονομα" HorizontalAlignment="Left" Margin="33,89,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
             <TextBox Name="NewEmpFirstname" HorizontalAlignment="Left" Margin="33,114,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
             <Label Content="Επίθετο" HorizontalAlignment="Left" Margin="33,145,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
@@ -225,7 +204,6 @@
                     Click="AddButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <!--<Setter Property="TextElement.FontFamily" Value="".>-->
                         <Setter Property="Background" Value="DarkOrange"/>
                         <Setter Property="Cursor" Value="Hand"/>
                         <Style.Triggers>
@@ -249,7 +227,46 @@
 
 
 
-            <DataGrid x:Name="EmpList" AutoGenerateColumns="False" Margin="270,44,24,47" Grid.Row="1" RenderTransformOrigin="0.426,0.49">
+            <Label Content="Φίλτρα:" HorizontalAlignment="Left" Margin="283,50,0,0" Grid.Row="1" VerticalAlignment="Top" FontWeight="Bold" Foreground="White"/>
+            <Button x:Name="ToggleFilterButton" 
+                    Content="Εμφάνιση μόνο ενεργών" 
+                    HorizontalAlignment="Left" 
+                    Foreground="White"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    Margin="360,41,0,0"
+                    Padding="6,4"
+                    Grid.Row="1" 
+                    VerticalAlignment="Top" 
+                    RenderTransformOrigin="0.376,-1.161" 
+                    Height="47" Width="208" 
+                    Click="ToggleFilterButton_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="DarkOrange"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkRed"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="200" Height="40"
+                                CornerRadius="12"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+
+            <DataGrid x:Name="EmpList" AutoGenerateColumns="False" Margin="270,102,24,47" Grid.Row="1" RenderTransformOrigin="0.426,0.49">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding EmpId}" Width="30"/>
                     <DataGridTemplateColumn Header="Επεξεργασία" Width="100">

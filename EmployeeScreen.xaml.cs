@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ namespace WpfApp2
         private readonly EmployeeService _employeeService;
         private readonly DepartmentService _departmentService;
         private readonly LevelService _levelService;
+        private List<Employee> _allEmployees;
+        private bool _filterActiveOnly = false;
+
 
         public EmployeeScreen()
         {
@@ -93,6 +97,8 @@ namespace WpfApp2
             }
 
             EmpList.ItemsSource = employees;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(EmpList.ItemsSource);
+            view.Filter = EmployeeFilter;
         }
 
         private void LoadDepartments()
@@ -174,6 +180,22 @@ namespace WpfApp2
                     LoadEmployees();
                 }
             }
+        }
+
+        private bool EmployeeFilter(object item)
+        {
+            if (item is Employee emp)
+            {
+                return !_filterActiveOnly || emp.EmpActiveDisplay == "Ναι"; // Adjust if your "active" value is different
+            }
+            return true;
+        }
+
+        private void ToggleFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            _filterActiveOnly = !_filterActiveOnly;
+            CollectionViewSource.GetDefaultView(EmpList.ItemsSource).Refresh();
+            ToggleFilterButton.Content = _filterActiveOnly ? "Εμφάνιση όλων" : "Εμφάνιση μόνο ενεργών";
         }
 
         private void ClearForm()
