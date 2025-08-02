@@ -150,7 +150,7 @@
 
             <Image HorizontalAlignment="Left" 
                    Height="172" 
-                   Margin="745,181,0,0" 
+                   Margin="847,173,0,0" 
                    Grid.Row="1" 
                    VerticalAlignment="Top" 
                    Width="243"
@@ -160,7 +160,7 @@
                            FontSize="30"
                            FontWeight="Medium"
                            VerticalAlignment="Top"
-                           Margin="32,43,401,0" Grid.Row="1"/>
+                           Margin="778,43,778,0" Grid.Row="1"/>
 
             <TextBlock Text="Επιλέξτε μια απο τις ενέργειες που επιθυμείτε"
                        TextWrapping="Wrap"    
@@ -168,26 +168,20 @@
                        FontSize="20"
                        FontWeight="Medium"
                        VerticalAlignment="Top"
-                       Margin="625,384,837,0" Grid.Row="1" Height="46"/>
+                       Margin="728,376,734,0" Grid.Row="1" Height="46"/>
             <Button Content="Υπάλληλοι" 
                     Foreground="White"
-                    HorizontalAlignment="Left" 
-                    Margin="728,489,0,0" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,481,0,0" 
                     Grid.Row="1" 
-                    VerticalAlignment="Top" Width="249" Height="46" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14"
+                    VerticalAlignment="Top" Width="250" Height="46" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14"
                     Click="AddEmployeeButton_Click"/>
-            <Button Content="Επεξεργασία Υπαλλήλου" 
-                    Foreground="White"
-                    HorizontalAlignment="Left" 
-                    Margin="728,613,0,0" 
-                    Grid.Row="1" 
-                    VerticalAlignment="Top" Width="249" Height="46" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14" RenderTransformOrigin="1.105,0.736"/>
             <Button Content="Τμήματα" 
                     Foreground="White"
-                    HorizontalAlignment="Left" 
-                    Margin="728,554,0,0" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,546,0,0" 
                     Grid.Row="1" 
-                    VerticalAlignment="Top" Width="249" Height="46" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14"
+                    VerticalAlignment="Top" Width="250" Height="46" Background="#FFB1B1B1" FontWeight="Bold" FontSize="14"
                     Click="Department_Click"/>
 
 

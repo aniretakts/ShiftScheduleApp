@@ -52,7 +52,7 @@
                         FontWeight="Medium" 
                         Margin="138,0,0,0"
                         Click="mainMenu_Click"/>
-                
+
                 <Button Content="Διαχείρηση Προσωπικού"
                         Foreground="White"
                         Background="Transparent"
@@ -148,7 +148,7 @@
 
             <Image HorizontalAlignment="Left" 
                    Height="141" 
-                   Margin="118,112,0,0" 
+                   Margin="867,148,0,0" 
                    Grid.Row="1" 
                    VerticalAlignment="Top" 
                    Width="194"
@@ -158,7 +158,7 @@
                            FontSize="30"
                            FontWeight="Medium"
                            VerticalAlignment="Top"
-                           Margin="94,43,463,0" Grid.Row="1"/>
+                           Margin="846,43,846,0" Grid.Row="1"/>
 
             <TextBlock Text="Πρόγραμμα διαχείρησης υπαλλήλων και δημιουργίας εβδομαδιαίου προγράμματος. Επιλέξτε απο το μενού την ενέργεια που επιθυμείτε."
                        TextWrapping="Wrap"    
@@ -166,7 +166,7 @@
                         FontSize="20"
                         FontWeight="Medium"
                         VerticalAlignment="Top"
-                        Margin="80,291,414,0" Grid.Row="1" Height="164"/>
+                        Margin="631,336,631,0" Grid.Row="1" Height="121"/>
 
 
 

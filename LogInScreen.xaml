@@ -151,7 +151,7 @@
 
             <Image HorizontalAlignment="Left" 
                    Height="141" 
-                   Margin="118,112,0,0" 
+                   Margin="866,122,0,0" 
                    Grid.Row="1" 
                    VerticalAlignment="Top" 
                    Width="194"
@@ -161,7 +161,7 @@
                            FontSize="30"
                            FontWeight="Medium"
                            VerticalAlignment="Top"
-                           Margin="94,43,463,0" Grid.Row="1"/>
+                           Margin="832,44,834,0" Grid.Row="1"/>
 
             <TextBlock Text="Πρόγραμμα δημιουργίας εβδομαδιαίου προγράμματος"
                        TextWrapping="Wrap"    
@@ -169,7 +169,7 @@
                         FontSize="20"
                         FontWeight="Medium"
                         VerticalAlignment="Top"
-                        Margin="80,291,414,0" Grid.Row="1" Height="117"/>
+                        Margin="688,301,688,0" Grid.Row="1" Height="79"/>
 
 
 
