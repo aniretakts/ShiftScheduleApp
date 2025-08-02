@@ -169,7 +169,6 @@
                     Click="AddButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <!--<Setter Property="TextElement.FontFamily" Value="".>-->
                         <Setter Property="Background" Value="DarkOrange"/>
                         <Setter Property="Cursor" Value="Hand"/>
                         <Style.Triggers>

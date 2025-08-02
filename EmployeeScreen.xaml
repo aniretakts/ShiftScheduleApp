@@ -225,7 +225,6 @@
                 </Button.Template>
             </Button>
 
-            <!-- Department Filter ComboBox -->
             <ComboBox x:Name="DepartmentFilterComboBox"
                       DisplayMemberPath="DepName"
                       SelectedValuePath="DepId"

@@ -84,11 +84,11 @@ namespace WpfApp2
             {
                 Department newDepartment = new Department
                 {
-                    DepName = departmentName  // Assuming your property is DepartmentName
+                    DepName = departmentName 
                 };
 
                 _departmentService.AddDepartment(newDepartment);
-                LoadData(); // Refresh the DataGrid
+                LoadData();
 
                 NewDepartmentName.Text = string.Empty;
             }
@@ -107,7 +107,7 @@ namespace WpfApp2
         {
             if (sender is Button button && button.CommandParameter is int departmentId)
             {
-                // Check for employees linked to this department
+                
                 var employeesInDepartment = _employeeService.GetEmployees()
                                                             .Where(emp => emp.EmpDep == departmentId)
                                                             .ToList();
@@ -129,7 +129,7 @@ namespace WpfApp2
                 if (result == MessageBoxResult.Yes)
                 {
                     _departmentService.DeleteDepartment(departmentId);
-                    LoadData(); // Refresh the DataGrid
+                    LoadData();
                 }
             }
         }

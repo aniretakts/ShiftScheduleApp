@@ -107,7 +107,6 @@ namespace WpfApp2
             List<Department> departments = _departmentService.GetDepartments();
             NewEmpDep.ItemsSource = departments;
 
-            // Add an "All" option to ComboBox
             var allOption = new Department { DepId = -1, DepName = "Όλα τα Τμήματα" };
             departments.Insert(0, allOption);
 
@@ -153,7 +152,7 @@ namespace WpfApp2
                 };
 
                 _employeeService.AddEmployee(newEmployee);
-                LoadEmployees(); // Refresh the DataGrid
+                LoadEmployees();
                 ClearForm();
             }
             else
@@ -171,7 +170,7 @@ namespace WpfApp2
                 if (result == MessageBoxResult.Yes)
                 {
                     _employeeService.PauseEmployee(empId);
-                    LoadEmployees(); // Refresh the grid
+                    LoadEmployees();
                 }
             }
         }
@@ -184,7 +183,6 @@ namespace WpfApp2
                 var editWindow = new EditEmployeeWindow(empToEdit);
                 if (editWindow.ShowDialog() == true)
                 {
-                    // Reload DataGrid
                     LoadEmployees();
                 }
             }
